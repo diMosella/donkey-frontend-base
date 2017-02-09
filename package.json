@@ -1,0 +1,24 @@
+{
+  "name": "donkey-starter-kit",
+  "version": "0.0.1",
+  "description": "Starter kit for setting up front end projects more quickly.",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diMosella/donkey-starter-kit.git"
+  },
+  "keywords": [
+    "Donkey",
+    "Starter",
+    "Kit"
+  ],
+  "author": "diMosella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diMosella/donkey-starter-kit/issues"
+  },
+  "homepage": "https://github.com/diMosella/donkey-starter-kit#readme"
+}
