@@ -111,14 +111,25 @@ Chai is a test assertion library providing `should`,  `expect` and `assert`. Als
 
 ## Folder structure
 
-- `src`
-
- - `components`
- - `containers`
- - `layouts`
- - `routes`
-
-  - `Home`
- - `store`
-
-- `test`
+```
+donkey-starter-kit
+│    README.md
+│
+└─── src
+│    │
+│    └─── actions
+│    │
+│    └─── components
+│    │
+│    └─── containers
+│    │
+│    └─── layouts
+│    │
+│    └─── reducers
+│    │
+│    └─── routes
+│    │
+│    └─── store
+│
+└─── test
+```
