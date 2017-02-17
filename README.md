@@ -1,10 +1,6 @@
-![Donkey --argparser](donkey.svg?raw=yes "Donkey")
-<a href="https://github.com/diMosella">
-  <img src="donkey.svg?raw=true" width="100%" height="144">
+<a href='https://github.com/diMosella'>
+  <img alt='Donkey Starter Kit' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
-
- [ ![bintray](https://img.shields.io/bintray/v/xenomachina/maven/kotlin-argparser.svg?style=plastic) ](https://bintray.com/xenomachina/maven/kotlin-argparser/_latestVersion)
-  [ ![Travis](https://img.shields.io/travis/xenomachina/kotlin-argparser.svg?style=plastic) ](https://travis-ci.org/xenomachina/kotlin-argparser)
 
 # Donkey starter kit
 Starter kit for setting up front end projects more quickly.
