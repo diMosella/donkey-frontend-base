@@ -1,6 +1,6 @@
-![Donkey starter kit logo](donkey.svg?raw=yes "Donkey")
-<a href="https://github.com/diMossela">
-  <img src="donkey.svg?raw=yes" width="100%" height="144">
+![Donkey starter kit logo --argparser](donkey.svg?raw=yes "Donkey")
+<a href="https://github.com/diMosella">
+  <img src="donkey.svg?raw=true" width="100%" height="144">
 </a>
 
 # Donkey starter kit
