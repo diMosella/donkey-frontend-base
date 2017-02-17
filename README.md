@@ -1,6 +1,6 @@
-![Donkey starter kit logo](donkey.svg?raw=true "Donkey")
+![Donkey starter kit logo](donkey.svg?raw=yes "Donkey")
 <a href="https://github.com/diMossela">
-  <img src="donkey.svg" width="100%" height="144">
+  <img src="donkey.svg?raw=yes" width="100%" height="144">
 </a>
 
 # Donkey starter kit
