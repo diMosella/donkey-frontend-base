@@ -6,8 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --colors",
     "test": "mocha",
-    "test:watch": "mocha --watch --reporter min",
-    "coverage": "babel-node ./node_modules/.bin/isparta cover --include 'src/**/*.js*' _mocha"
+    "test:watch": "mocha --watch --reporter min --watch-extensions jsx",
+    "coverage": "babel-node ./node_modules/.bin/isparta cover --include 'src/**/*.js*' --exclude 'src/**/*.spec.js*' _mocha"
   },
   "repository": {
     "type": "git",

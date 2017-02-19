@@ -105,9 +105,15 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 Chai is a test assertion library providing `should`,  `expect` and `assert`. Also, plugin `chai-immutable` is used to test redux app.
 
+### Isparta
+
+Code coverage is determined by `isparta` / `istanbul`. Configuration is found in `/package.json`.
+
 ## Distribution Environment
 
 ### Immutable
+
+Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/.
 
 ## Folder structure
 
