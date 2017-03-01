@@ -8,7 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PATH_SRC = path.join(__dirname, 'src');
 const PATH_DIST = path.join(__dirname, 'dist');
 const PATH_PUBLIC = '/';
-const PATH_START = path.join(PATH_SRC, 'app.jsx');
+const PATH_START = path.join(PATH_SRC, 'index.jsx');
 const FILE_INDEX = 'index.html';
 const FILE_INDEX_TEMPLATE = 'index.template.ejs';
 

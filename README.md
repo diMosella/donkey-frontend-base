@@ -113,7 +113,7 @@ Code coverage is determined by `isparta` / `istanbul`. Configuration is found in
 
 ### Immutable
 
-Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/.
+Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/. http://redux.js.org/docs/basics/ExampleTodoList.html
 
 ## Folder structure
 
