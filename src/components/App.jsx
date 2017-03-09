@@ -5,7 +5,7 @@ import VisibleTodoList from '../containers/VisibleTodoList';
 
 class App extends PureComponent {
   render () {
-    return <div>
+    return <div className='app'>
       <AddTodo />
       <VisibleTodoList />
       <Footer />
