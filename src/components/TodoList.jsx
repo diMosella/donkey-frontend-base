@@ -1,4 +1,6 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
 import Todo from './Todo';
 
 class TodoList extends PureComponent {

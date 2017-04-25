@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderIntoDocument, findRenderedDOMComponentWithClass } from 'react-addons-test-utils';
+import { renderIntoDocument, findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
 import Todo from './Todo';
 import { expect } from 'chai';
 

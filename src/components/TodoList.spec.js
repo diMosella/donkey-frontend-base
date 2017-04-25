@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderIntoDocument, findRenderedDOMComponentWithClass,
-  scryRenderedComponentsWithType, Simulate } from 'react-addons-test-utils';
+  scryRenderedComponentsWithType, Simulate } from 'react-dom/test-utils';
 import TodoList from './TodoList';
 import Todo from './Todo';
 import { expect } from 'chai';

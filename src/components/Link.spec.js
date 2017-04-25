@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'react-addons-test-utils';
+import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'react-dom/test-utils';
 import Link from './Link';
 import { expect } from 'chai';
 
@@ -36,7 +36,7 @@ describe('(Component) Link', () => {
     let text = 'This test Link is completed';
 
     const component = renderIntoDocument(
-      <Link onClick={onClick} children={text} />
+      <Link onClick={onClick} active={false} children={text} />
     );
 
     const link = findRenderedDOMComponentWithTag(component, 'a');
