@@ -11,27 +11,27 @@ Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
 ## For Sublime Text:
 
 1. Make sure you have installed at least the following packages:
-  1. PackageControl
-  1. Babel
-  1. EditorConfig
-  1. SublimeLinter
-  1. SublimeLinter-contrib-eslint
-  1. SublimeLinter-contrib-stylelint
+    1. PackageControl
+    1. Babel
+    1. EditorConfig
+    1. SublimeLinter
+    1. SublimeLinter-contrib-eslint
+    1. SublimeLinter-contrib-stylelint
 1. Set syntax correctly, since linting is coupled with syntax selection
-  1. For JavaScript:
-    1. Open a file with `.js` extension
-    1. Choose View > Syntax > Open all with current extension as... > Babel > Javascript (Babel)
-  1. For JSX
-    1. Open a file with `.jsx` extension
-    1. Choose View > Syntax > Open all with current extension as... > Babel > Javascript (Babel)
-  1. For JSON:
-    1. Open a file with `.json` extension
-    1. Choose View > Syntax > Open all with current extension as... > Babel > JSON
-    1. Map JSON syntax viewing to the right linting mechanism
-      1. Choose Preferences > Package Settings > SublimeLinter > Settings - User
-      1. Find the property `"syntax_map"`
-      1. Check if `"javascript (babel)": "javascript"` is present
-      1. Add `"json": "javascript"`
+    1. For JavaScript:
+        1. Open a file with `.js` extension
+        1. Choose View > Syntax > Open all with current extension as... > Babel > Javascript (Babel)
+    1. For JSX
+        1. Open a file with `.jsx` extension
+        1. Choose View > Syntax > Open all with current extension as... > Babel > Javascript (Babel)
+    1. For JSON:
+        1. Open a file with `.json` extension
+        1. Choose View > Syntax > Open all with current extension as... > Babel > JSON
+        1. Map JSON syntax viewing to the right linting mechanism
+            1. Choose Preferences > Package Settings > SublimeLinter > Settings - User
+            1. Find the property `"syntax_map"`
+            1. Check if `"javascript (babel)": "javascript"` is present
+            1. Add `"json": "javascript"`
 
 ## Clone the project:
 
@@ -105,15 +105,17 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 Chai is a test assertion library providing `should`,  `expect` and `assert`. Also, plugin `chai-immutable` is used to test redux app.
 
-### Isparta
+### Nyc
 
-Code coverage is determined by `isparta` / `istanbul`. Configuration is found in `/package.json`.
+Code coverage is determined by `nyc`, the command-line interface for `istanbul`. Configuration is found in `/.nycrc`.
 
 ## Distribution Environment
 
 ### Immutable
 
-Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/. http://redux.js.org/docs/basics/ExampleTodoList.html
+## Inpiration from
+
+Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/. Further, the tutorial on http://redux.js.org/docs/basics/ExampleTodoList.html is used for Redux.
 
 ## Folder structure
 

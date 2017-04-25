@@ -7,10 +7,10 @@
     'react',
     'stage-0'
   ],
-  "env": {
-    "test": {
-      "plugins": [
-        "istanbul"
+  'env': {
+    'test': {
+      'plugins': [
+        'istanbul'
         ]
     }
   }

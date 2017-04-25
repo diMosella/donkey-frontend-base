@@ -1,4 +1,11 @@
 {
+  "watermarks": {
+    "lines": [40, 70],
+    "functions": [40, 70],
+    "branches": [40, 70],
+    "statements": [40, 70]
+  },
+  "lines": 30,
   "include": [
     "src/**/*.js",
     "src/**/*.jsx"
