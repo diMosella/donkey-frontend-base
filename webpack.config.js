@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PATH_SRC = path.join(__dirname, 'src');
@@ -24,16 +25,13 @@ module.exports = {
     app: [
       // for template strings, use backticks
       `webpack-dev-server/client?http://${SERVER_HOST}:${SERVER_PORT}`,
-      'webpack/hot/only-dev-server',
       PATH_START
     ],
     libs: [
       `webpack-dev-server/client?http://${SERVER_HOST}:${SERVER_PORT}`,
-      'webpack/hot/only-dev-server',
       'react',
       'react-redux',
       'react-router',
-      // 'reactstrap',
       'redux'
     ]
   },
@@ -43,7 +41,6 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [
-          'react-hot-loader',
           'babel-loader'
         ]
       },
@@ -57,11 +54,6 @@ module.exports = {
           use: 'postcss-loader'
         })
       },
-      /** since webpack 2 json is loaded automatically **/
-      /* {
-        test: /\.json$/,
-        use: 'json-loader'
-      }, */
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
         use: 'url-loader?limit=10000&mimetype=application/font-woff'
@@ -99,7 +91,7 @@ module.exports = {
 
   devServer: {
     inline: true,
-    hot: true,
+    hot: false,
     contentBase: PATH_DIST,
     host: SERVER_HOST,
     port: SERVER_PORT,
@@ -109,7 +101,7 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin([PATH_DIST]),
 
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
@@ -128,6 +120,9 @@ module.exports = {
     /* creates separate css-files in the dist folder */
     new ExtractTextPlugin({
       filename: '[name].css'
-    })
+    }),
+
+    new webpack.NamedModulesPlugin()/*,
+    new webpack.HotModuleReplacementPlugin() */
   ]
 };
