@@ -1,4 +1,4 @@
-# Donkey Front-end base
+# Donkey Front-end Base
 
 A base setup to facilitate easier start of frontend (web-)development.
 
