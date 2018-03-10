@@ -1,0 +1,19 @@
+{
+  "name": "donkey-frontend-base",
+  "version": "0.0.1",
+  "description": "A base module for frontend (web-)development",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diMosella/donkey-frontend-base.git"
+  },
+  "author": "diMosella",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diMosella/donkey-frontend-base/issues"
+  },
+  "homepage": "https://github.com/diMosella/donkey-frontend-base#readme"
+}
