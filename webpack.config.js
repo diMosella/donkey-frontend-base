@@ -23,12 +23,9 @@ const SERVER_PORT = process.env.PORT || 8080;
 module.exports = {
   entry: {
     app: [
-      // for template strings, use backticks
-      `webpack-dev-server/client?http://${SERVER_HOST}:${SERVER_PORT}`,
       PATH_START
     ],
     libs: [
-      `webpack-dev-server/client?http://${SERVER_HOST}:${SERVER_PORT}`,
       'react',
       'react-redux',
       'react-router',
@@ -91,7 +88,7 @@ module.exports = {
 
   devServer: {
     inline: true,
-    hot: false,
+    hot: true,
     contentBase: PATH_DIST,
     host: SERVER_HOST,
     port: SERVER_PORT,
@@ -106,7 +103,7 @@ module.exports = {
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
       template : path.join(PATH_SRC, FILE_INDEX_TEMPLATE),
-      title    : 'Donkey Starter Kit',
+      title    : 'Donkey Front-end Base module',
       hash     : false,
       favicon  : path.join(PATH_SRC, 'favicon.ico'),
       filename : FILE_INDEX,
@@ -122,7 +119,7 @@ module.exports = {
       filename: '[name].css'
     }),
 
-    new webpack.NamedModulesPlugin()/*,
-    new webpack.HotModuleReplacementPlugin() */
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };

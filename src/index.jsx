@@ -5,7 +5,9 @@ import { createStore } from 'redux';
 import todoApp from './reducers';
 import App from './components/App';
 
-createStore(todoApp).then((store) => {
+let store = createStore(todoApp);
+
+document.addEventListener('DOMContentLoaded', event => {
   render(
     <Provider store={store}>
       <App />
