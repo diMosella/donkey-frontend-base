@@ -16,6 +16,7 @@ let AddTodo = ({ dispatch }) => {
         dispatch(addTodo(input.value));
         input.value = '';
       }}>
+        {`${process.env.NODE_ENV.toUpperCase()} MODE`}<br />
         <input ref={node => {
           input = node;
         }} />

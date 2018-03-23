@@ -13,6 +13,8 @@ const PATH_START = path.join(PATH_SRC, 'index.jsx');
 const FILE_INDEX = 'index.html';
 const FILE_INDEX_TEMPLATE = 'index.template.ejs';
 
+process.traceDeprecation = true;
+
 /* using `localhost` will prevent exposing the app
     to expose the app use: */
 // const ip = require('ip');
@@ -21,6 +23,7 @@ const SERVER_HOST = 'localhost';
 const SERVER_PORT = process.env.PORT || 8080;
 
 module.exports = {
+  mode: 'development',
   entry: {
     app: [
       PATH_START
@@ -87,6 +90,7 @@ module.exports = {
   },
 
   devServer: {
+    colors: true,
     inline: true,
     hot: true,
     contentBase: PATH_DIST,
@@ -119,7 +123,6 @@ module.exports = {
       filename: '[name].css'
     }),
 
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.NamedModulesPlugin()
   ]
 };
