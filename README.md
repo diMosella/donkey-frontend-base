@@ -2,6 +2,8 @@
   <img alt='Donkey Front-end Base module' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
 
+https://david-dm.org/diMosella/donkey-starter-kit.svg
+
 # Donkey Front-end Base module
 Base module for setting up front-end projects more quickly.
 Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
