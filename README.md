@@ -23,7 +23,7 @@ Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
 ## Clone the project:
 
 ```bash
-$ git clone https://github.com/diMosella/donkey-starter-kit.git <my-project-name>
+$ git clone https://github.com/diMosella/donkey-starter-kit.git <my-folder-name>
 $ cd <my-project-name>
 ```
 
