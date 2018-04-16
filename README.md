@@ -8,7 +8,7 @@ Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
 
 # Getting started
 
-## For Visual Studio Code
+## For Visual Studio Code:
 
 1. Make sure you have installed the following extensions:
   1. ESLint
