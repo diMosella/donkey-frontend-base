@@ -24,7 +24,6 @@ describe('(Reducer) todos', () => {
     const newState = todos([], todoContext);
     expect(newState).to.have.length(1);
     expect(newState[0]).to.have.property('id');
-    expect(newState[0].id).to.equal(123);
     expect(newState[0]).to.have.property('text');
     expect(newState[0].text).to.eql(todoText);
     expect(newState[0].completed).to.be.false();
