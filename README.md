@@ -2,6 +2,8 @@
   <img alt='Donkey Starter Kit' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
 
+# WARNING: this repository will be deprecated soon!
+
 # Donkey starter kit
 Starter kit for setting up front end projects more quickly.
 Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
