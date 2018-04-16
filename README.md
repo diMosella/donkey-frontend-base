@@ -8,6 +8,16 @@ Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
 
 # Getting started
 
+## For Visual Studio Code
+
+1. Make sure you have installed the following extensions:
+  1. ESLint
+  1. EditorConfig for VS Code
+  1. Debugger for Chrome
+  1. (Docker)
+  1. (Sublime Text Keymap)
+  1. (Theme - Oceanic Next)
+
 ## For Sublime Text:
 
 1. Make sure you have installed at least the following packages:
