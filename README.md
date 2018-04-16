@@ -15,3 +15,7 @@ A base setup to facilitate easier start of frontend (web-)development.
 * [ ] Use async reducers
 * [ ] Use nested layouts
 * [ ] Use routes
+* [ ] Use lazy loading based on routes
+* [ ] Single Page Application
+* [ ] History API
+* [ ] Use progressive loading
