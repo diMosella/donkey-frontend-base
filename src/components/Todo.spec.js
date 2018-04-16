@@ -14,7 +14,7 @@ describe('(Component) Todo', () => {
     );
 
     const todo = findRenderedDOMComponentWithClass(component, 'todo');
-    expect(todo).to.be.ok;
+    expect(todo).to.be.ok();
     const todoText = todo.textContent;
     expect(todoText).to.equal(text);
   });

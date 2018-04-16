@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-
 class Todo extends PureComponent {
   render () {
     const { onClick, completed, text } = this.props;

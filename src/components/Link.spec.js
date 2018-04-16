@@ -4,7 +4,7 @@ import Link from './Link';
 import { expect } from 'chai';
 
 describe('(Component) Link', () => {
-  it('renders an a with text when inactive', () => {
+  it('renders an a-tag with text when inactive', () => {
     let onClick = (param) => null;
     let text = 'This test Link is completed';
 
@@ -13,11 +13,11 @@ describe('(Component) Link', () => {
     );
 
     const link = findRenderedDOMComponentWithTag(component, 'a');
-    expect(link).to.be.ok;
+    expect(link).to.be.ok();
     const linkText = link.textContent;
     expect(linkText).to.equal(text);
   });
-  it('renders a span with text when active', () => {
+  it('renders a span-tag with text when active', () => {
     let onClick = (param) => null;
     let text = 'This test Link is completed';
 
@@ -26,7 +26,7 @@ describe('(Component) Link', () => {
     );
 
     const link = findRenderedDOMComponentWithTag(component, 'span');
-    expect(link).to.be.ok;
+    expect(link).to.be.ok();
     const linkText = link.textContent;
     expect(linkText).to.equal(text);
   });
@@ -40,7 +40,7 @@ describe('(Component) Link', () => {
     );
 
     const link = findRenderedDOMComponentWithTag(component, 'a');
-    expect(link).to.be.ok;
+    expect(link).to.be.ok();
     Simulate.click(link);
     expect(isClicked).to.equal(true);
   });

@@ -4,7 +4,9 @@ import { renderIntoDocument, findRenderedDOMComponentWithClass,
   scryRenderedComponentsWithType, Simulate } from 'react-dom/test-utils';
 import TodoList from './TodoList';
 import Todo from './Todo';
-import { expect } from 'chai';
+import dirtyChai from 'dirty-chai';
+import chai, { expect } from 'chai';
+chai.use(dirtyChai);
 
 describe('(Component) TodoList', () => {
   it('renders a div with class \'todo-list\'', () => {
@@ -14,7 +16,7 @@ describe('(Component) TodoList', () => {
     );
 
     const todoListElmt = findRenderedDOMComponentWithClass(component, 'todo-list');
-    expect(todoListElmt).to.be.ok;
+    expect(todoListElmt).to.be.ok();
   });
 
   it('renders a Todo component for each todo item', () => {
