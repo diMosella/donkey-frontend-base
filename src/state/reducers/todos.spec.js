@@ -28,25 +28,23 @@ describe('(Reducer) todos', () => {
     expect(newState[0].text).to.eql(todoText);
     expect(newState[0].completed).to.be.false();
   });
+  it('can toggle a TODO.', () => {
+    const todo = {
+      id: 0,
+      text: 'Can toggle?',
+      completed: false
+    };
+    const todoContext = {
+      type: 'TOGGLE_TODO',
+      id: 0
+    };
+
+    const newState = todos([ todo ], todoContext);
+    expect(newState).to.have.length(1);
+    expect(newState[0]).to.have.property('id');
+    expect(newState[0].id).to.eql(0);
+    expect(newState[0]).to.have.property('text');
+    expect(newState[0].text).to.eql(todo.text);
+    expect(newState[0].completed).to.be.true();
+  });
 });
-/*   describe('(Reducer)', () => {
-    i
-
-    it('Can add a new notification.', () => {
-      const notification = {
-        type: 'ADD_NOTIFICATION',
-        payload: {
-          raw: {
-            name: 'asdf',
-            issuedate: moment()
-          }
-        }
-      };
-
-      const newState = recentTriggerReducer([], notification);
-      expect(newState).to.have.length(1);
-      expect(newState[0]).to.have.property('name');
-      expect(newState[0].name).to.equal('asdf');
-      expect(newState[0]).to.have.property('discarded');
-      expect(newState[0].discarded).to.be.false();
-    }); */
