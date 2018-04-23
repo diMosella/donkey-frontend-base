@@ -2,7 +2,7 @@
   <img alt='Donkey Front-end Base module' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
 
-https://david-dm.org/diMosella/donkey-starter-kit.svg
+[![dependencies status](https://david-dm.org/diMosella/donkey-starter-kit.svg)](https://david-dm.org/diMosella/donkey-starter-kit) [![devDependencies status](https://david-dm.org/diMosella/donkey-starter-kit/dev-status.svg)](https://david-dm.org/diMosella/donkey-starter-kit/?type=dev)
 
 # Donkey Front-end Base module
 Base module for setting up front-end projects more quickly.
