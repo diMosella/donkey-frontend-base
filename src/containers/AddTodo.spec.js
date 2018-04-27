@@ -3,11 +3,14 @@ import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'r
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import chai, { expect } from 'chai';
+import chai from 'chai';
+import chaiImmutable from 'chai-immutable';
 import dirtyChai from 'dirty-chai';
 import AddTodo from './AddTodo';
 import todoApp from '../state/reducers';
+chai.use(chaiImmutable);
 chai.use(dirtyChai);
+const expect = chai.expect;
 
 describe('(Container) AddTodo', () => {
   it('renders an div-tag', () => {
@@ -27,15 +30,19 @@ describe('(Container) AddTodo', () => {
     const button = findRenderedDOMComponentWithTag(component, 'button');
     expect(button).to.be.ok();
     Simulate.click(button);
-    expect(store.getState().todos).to.have.length(0);
+    expect(store.getState().todos).to.have.size(0);
     const input = findRenderedDOMComponentWithTag(component, 'input');
     expect(input).to.be.ok();
+    input.value = ' ';
+    Simulate.change(input);
+    expect(input.value).to.equal(' ');
+    Simulate.submit(button);
+    expect(store.getState().todos).to.have.size(0);
     input.value = text;
     Simulate.change(input);
     expect(input.value).to.equal(text);
     Simulate.submit(button);
-    expect(store.getState().todos).to.have.length(1);
-    expect(store.getState().todos[0]).to.have.property('text');
-    expect(store.getState().todos[0].text).to.eql(text);
+    expect(store.getState().todos).to.have.size(1);
+    expect(store.getState().todos.get(0)).to.have.property('text', text);
   });
 });

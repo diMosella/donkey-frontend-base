@@ -1,35 +1,33 @@
-const todo = (state = {}, action) => {
+import { List, Map } from 'immutable';
+
+const todo = (state = Map({}), action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return {
+      return Map({
         id: action.id,
         text: action.text,
         completed: false
-      };
+      });
     case 'TOGGLE_TODO':
-      if (state.id !== action.id) {
+      if (state.get('id') !== action.id) {
         return state;
       }
 
-      return Object.assign({}, state, {
-        completed: !state.completed
-      });
-
+      return state.update('completed', completed => !completed);
     default:
       return state;
   }
 };
 
-const todos = (state = [], action) => {
+const todos = (state = List([]), action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return [
-        ...state,
+      return state.push(
         todo(undefined, action)
-      ];
+      );
     case 'TOGGLE_TODO':
-      return state.map(t =>
-        todo(t, action)
+      return state.map(todoItemState =>
+        todo(todoItemState, action)
       );
     default:
       return state;

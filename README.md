@@ -90,13 +90,17 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 ### Chai
 
-Chai is a test assertion library providing `should`,  `expect` and `assert`. Also, plugin `chai-immutable` is used to test redux app.
+Chai is a test assertion library providing `should`,  `expect` and `assert`. Also, plugin `chai-immutable` is used to test `immutable redux` states.
 
 ### Nyc
 
 Code coverage is determined by `nyc`, the command-line interface for `istanbul`. Configuration is found in `/.nycrc`.
 
 ## Distribution Environment
+
+### React
+
+### Redux
 
 ### Immutable
 
@@ -112,19 +116,19 @@ donkey-starter-kit
 │
 └─── src
 │    │
-│    └─── actions
-│    │
 │    └─── components
 │    │
 │    └─── containers
 │    │
 │    └─── layouts
 │    │
-│    └─── reducers
-│    │
 │    └─── routes
 │    │
-│    └─── store
+│    └─── state
+│         │
+│         └─── actions
+│         │
+│         └─── reducers
 │
 └─── test
 ```
