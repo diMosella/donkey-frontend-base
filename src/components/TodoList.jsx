@@ -7,9 +7,12 @@ class TodoList extends PureComponent {
   render () {
     const { todos, onTodoClick } = this.props;
     return <ul className='todo-list'>
-      { todos.map(todo =>
-        <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-      )}
+      { todos.valueSeq().map(todo =>
+        <Todo key={todo.get('id')}
+          completed={todo.get('completed')}
+          text={todo.get('text')}
+          onClick={() => onTodoClick(todo.get('id'))} />
+      ) }
     </ul>;
   }
 }
