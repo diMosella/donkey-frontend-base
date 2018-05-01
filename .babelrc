@@ -1,10 +1,20 @@
 {
-  'presets': [
+  "presets": [
     [
-      'es2015',
-      { 'loose': true }
+      "env",
+      { "loose": true }
     ],
-    'react',
-    'stage-0'
+    "react",
+    "stage-0"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  },
+  "plugins": [
+    "react-hot-loader/babel"
   ]
 }

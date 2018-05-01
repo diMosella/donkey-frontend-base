@@ -1,54 +1,31 @@
 <a href='https://github.com/diMosella'>
-  <img alt='Donkey Starter Kit' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
+  <img alt='Donkey Front-end Base module' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
+
+[![dependencies status](https://david-dm.org/diMosella/donkey-starter-kit.svg)](https://david-dm.org/diMosella/donkey-starter-kit) [![devDependencies status](https://david-dm.org/diMosella/donkey-starter-kit/dev-status.svg)](https://david-dm.org/diMosella/donkey-starter-kit/?type=dev)
 
 # WARNING: this repository will be deprecated soon!
 
-# Donkey starter kit
-Starter kit for setting up front end projects more quickly.
+# Donkey Front-end Base module
+Base module for setting up front-end projects more quickly.
 Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
 
 # Getting started
 
 ## For Visual Studio Code:
 
-1. Make sure you have installed the following extensions:
-  1. ESLint
-  1. EditorConfig for VS Code
-  1. Debugger for Chrome
-  1. (Docker)
-  1. (Sublime Text Keymap)
-  1. (Theme - Oceanic Next)
-
-## For Sublime Text:
-
-1. Make sure you have installed at least the following packages:
-  1. PackageControl
-  1. Babel
-  1. EditorConfig
-  1. SublimeLinter
-  1. SublimeLinter-contrib-eslint
-  1. SublimeLinter-contrib-stylelint
-1. Set syntax correctly, since linting is coupled with syntax selection
-  1. For JavaScript:
-    1. Open a file with `.js` extension
-    1. Choose View > Syntax > Open all with current extension as... > Babel > Javascript (Babel)
-  1. For JSX
-    1. Open a file with `.jsx` extension
-    1. Choose View > Syntax > Open all with current extension as... > Babel > Javascript (Babel)
-  1. For JSON:
-    1. Open a file with `.json` extension
-    1. Choose View > Syntax > Open all with current extension as... > Babel > JSON
-    1. Map JSON syntax viewing to the right linting mechanism
-      1. Choose Preferences > Package Settings > SublimeLinter > Settings - User
-      1. Find the property `"syntax_map"`
-      1. Check if `"javascript (babel)": "javascript"` is present
-      1. Add `"json": "javascript"`
+1. Preferred packages:
+    1. Debugger for Chrome
+    1. EditorConfig for VS Code
+    1. ESLint
+    1. stylelint
+    1. (Sublime Text Keymap)
+    1. (Theme - Oceanic Next)
 
 ## Clone the project:
 
 ```bash
-$ git clone https://github.com/diMosella/donkey-starter-kit.git <my-project-name>
+$ git clone https://github.com/diMosella/donkey-starter-kit.git <my-folder-name>
 $ cd <my-project-name>
 ```
 
@@ -115,17 +92,25 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 ### Chai
 
-Chai is a test assertion library providing `should`,  `expect` and `assert`. Also, plugin `chai-immutable` is used to test redux app.
+Chai is a test assertion library providing `should`,  `expect` and `assert`.
 
-### Isparta
+### Nyc
 
-Code coverage is determined by `isparta` / `istanbul`. Configuration is found in `/package.json`.
+Code coverage is determined by `nyc`, the command-line interface for `istanbul`. Configuration is found in `/.nycrc`.
 
 ## Distribution Environment
 
-### Immutable
+### React
 
-Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/.
+### Redux
+
+### Immer
+
+To guarantee the immutability of the Redux state, the package `immer` has been used. An alternative might be `immutable.js`. Apart from the facts that it requires significant adjustment of the code and its relatively big size, it also involves additional packages for type checking (`react-immutable-proptypes`) and unit testing (`chai-immutable`).
+
+## Inpiration from
+
+Inpired by https://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html and https://github.com/davezuko/react-redux-starter-kit/. Further, the tutorial on http://redux.js.org/docs/basics/ExampleTodoList.html is used for Redux.
 
 ## Folder structure
 
@@ -135,19 +120,19 @@ donkey-starter-kit
 │
 └─── src
 │    │
-│    └─── actions
-│    │
 │    └─── components
 │    │
 │    └─── containers
 │    │
 │    └─── layouts
 │    │
-│    └─── reducers
-│    │
 │    └─── routes
 │    │
-│    └─── store
+│    └─── state
+│         │
+│         └─── actions
+│         │
+│         └─── reducers
 │
 └─── test
 ```
