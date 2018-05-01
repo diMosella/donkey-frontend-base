@@ -1,7 +1,5 @@
 import { JSDOM as JsDom } from 'jsdom';
-import chai from 'chai';
 import { requestAnimationFrame } from 'request-animation-frame';
-import chaiImmutable from 'chai-immutable';
 
 const dom = new JsDom(`<!doctype html><html><body></body></html>`);
 const win = dom.window;
@@ -21,5 +19,3 @@ Object.keys(window).forEach((key) => {
     global[key] = window[key];
   }
 });
-
-chai.use(chaiImmutable);

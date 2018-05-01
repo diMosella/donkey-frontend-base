@@ -1,37 +1,41 @@
-import { List, Map } from 'immutable';
+import produce from 'immer';
+import { ACTION_TYPES } from '../actions';
 
-const todo = (state = Map({}), action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return Map({
-        id: action.id,
-        text: action.text,
-        completed: false
-      });
-    case 'TOGGLE_TODO':
-      if (state.get('id') !== action.id) {
-        return state;
-      }
-
-      return state.update('completed', completed => !completed);
-    default:
-      return state;
-  }
+/**
+ * Initial state needed to provide base data structure
+ */
+const TODO_INITIAL_STATE = {
+  id: null,
+  text: null,
+  completed: false
 };
 
-const todos = (state = List([]), action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return state.push(
-        todo(undefined, action)
-      );
-    case 'TOGGLE_TODO':
-      return state.map(todoItemState =>
-        todo(todoItemState, action)
-      );
-    default:
-      return state;
-  }
-};
+const todo = (state = TODO_INITIAL_STATE, action) =>
+  produce(state, draftState => {
+    switch (action.type) {
+      case ACTION_TYPES.ADD_TODO:
+        draftState.id = action.id;
+        draftState.text = action.text;
+        break;
+      case ACTION_TYPES.TOGGLE_TODO:
+        if (draftState.id === action.id) {
+          draftState.completed = !state.completed;
+        }
+        break;
+    }
+  });
+
+const todos = (state = [], action) =>
+  produce(state, draftState => {
+    switch (action.type) {
+      case ACTION_TYPES.ADD_TODO:
+        draftState.push(todo(undefined, action));
+        break;
+      case ACTION_TYPES.TOGGLE_TODO:
+        const itemIndex = draftState.findIndex(item => item.id === action.id);
+        draftState[itemIndex] = todo(draftState[itemIndex], action);
+        break;
+    }
+  });
 
 export default todos;

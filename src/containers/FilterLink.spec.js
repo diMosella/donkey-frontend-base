@@ -13,7 +13,7 @@ describe('(Container) FilterLink', () => {
       todos: []
     };
     const store = mockStore(initialState);
-    const component = renderIntoDocument(<Provider store={store}><FilterLink /></Provider>);
+    const component = renderIntoDocument(<Provider store={store}><FilterLink>test link</FilterLink></Provider>);
     const linkList = scryRenderedComponentsWithType(component, Link);
     expect(linkList.length).to.equal(1);
   });

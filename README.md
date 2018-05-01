@@ -90,7 +90,7 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 ### Chai
 
-Chai is a test assertion library providing `should`,  `expect` and `assert`. Also, plugin `chai-immutable` is used to test `immutable redux` states.
+Chai is a test assertion library providing `should`,  `expect` and `assert`.
 
 ### Nyc
 
@@ -102,7 +102,9 @@ Code coverage is determined by `nyc`, the command-line interface for `istanbul`.
 
 ### Redux
 
-### Immutable
+### Immer
+
+To guarantee the immutability of the Redux state, the package `immer` has been used. An alternative might be `immutable.js`. Apart from the facts that it requires significant adjustment of the code and its relatively big size, it also involves additional packages for type checking (`react-immutable-proptypes`) and unit testing (`chai-immutable`).
 
 ## Inpiration from
 
