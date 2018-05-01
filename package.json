@@ -1,6 +1,6 @@
 {
   "name": "donkey-starter-kit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Starter kit for setting up front end projects more quickly.",
   "main": "index.jsx",
   "scripts": {
