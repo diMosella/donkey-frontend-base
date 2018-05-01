@@ -4,6 +4,8 @@
 
 [![dependencies status](https://david-dm.org/diMosella/donkey-starter-kit.svg)](https://david-dm.org/diMosella/donkey-starter-kit) [![devDependencies status](https://david-dm.org/diMosella/donkey-starter-kit/dev-status.svg)](https://david-dm.org/diMosella/donkey-starter-kit/?type=dev)
 
+# WARNING: this repository will be deprecated soon!
+
 # Donkey Front-end Base module
 Base module for setting up front-end projects more quickly.
 Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
