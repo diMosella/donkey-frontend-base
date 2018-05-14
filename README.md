@@ -2,7 +2,7 @@
   <img alt='Donkey Front-end Base module' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
 
-[![dependencies status](https://david-dm.org/diMosella/donkey-starter-kit.svg)](https://david-dm.org/diMosella/donkey-starter-kit) [![devDependencies status](https://david-dm.org/diMosella/donkey-starter-kit/dev-status.svg)](https://david-dm.org/diMosella/donkey-starter-kit/?type=dev)
+[![Build Status](https://travis-ci.org/diMosella/donkey-starter-kit.svg?branch=master)](https://travis-ci.org/diMosella/donkey-starter-kit) [![dependencies status](https://david-dm.org/diMosella/donkey-starter-kit.svg)](https://david-dm.org/diMosella/donkey-starter-kit) [![devDependencies status](https://david-dm.org/diMosella/donkey-starter-kit/dev-status.svg)](https://david-dm.org/diMosella/donkey-starter-kit/?type=dev)
 
 # WARNING: this repository will be deprecated soon!
 
