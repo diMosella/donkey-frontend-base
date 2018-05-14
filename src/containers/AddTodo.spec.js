@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import chai from 'chai';
 import dirtyChai from 'dirty-chai';
 import AddTodo from './AddTodo';
+import { VISIBILITY_FILTERS } from '../state/actions';
 import todoApp from '../state/reducers';
 chai.use(dirtyChai);
 const expect = chai.expect;
@@ -14,7 +15,10 @@ describe('(Container) AddTodo', () => {
   it('renders an div-tag', () => {
     const mockStore = configureMockStore();
     const initialState = {
-      todos: []
+      todos: [],
+      visibilityFilter: {
+        filter: VISIBILITY_FILTERS.SHOW_ALL
+      }
     };
     const store = mockStore(initialState);
     const component = renderIntoDocument(<Provider store={store}><AddTodo /></Provider>);
