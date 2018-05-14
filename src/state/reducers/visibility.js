@@ -8,7 +8,7 @@ const VISIBILITY_INITIAL_STATE = {
   filter: VISIBILITY_FILTERS.SHOW_ALL
 };
 
-const visibilityFilter = (state = VISIBILITY_INITIAL_STATE, action) =>
+const visibility = (state = VISIBILITY_INITIAL_STATE, action) =>
   produce(state, draftState => {
     switch (action.type) {
       case ACTION_TYPES.SET_VISIBILITY_FILTER:
@@ -19,4 +19,4 @@ const visibilityFilter = (state = VISIBILITY_INITIAL_STATE, action) =>
     }
   });
 
-export default visibilityFilter;
+export default visibility;

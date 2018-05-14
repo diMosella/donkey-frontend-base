@@ -12,7 +12,7 @@ describe('(Component) Footer', () => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [],
-      visibilityFilter: {
+      visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ALL
       }
     };

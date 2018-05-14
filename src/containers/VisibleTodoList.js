@@ -18,7 +18,7 @@ const getVisibleTodos = (todos, filter) => {
 
 const mapStateToProps = (state) => {
   return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter.filter)
+    todos: getVisibleTodos(state.todos, state.visibility.filter)
   };
 };
 

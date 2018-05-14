@@ -8,8 +8,8 @@ let AddTodo = ({ dispatch }) => {
 
   return (
     <div>
-      <form onSubmit={e => {
-        e.preventDefault();
+      <form onSubmit={evt => {
+        evt.preventDefault();
         if (!input.value.trim()) {
           return;
         }
