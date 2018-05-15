@@ -55,6 +55,10 @@ The html-webpack-plugin inserts references to javascript and css bundle files in
 
 The extract-text-webpack-plugin is used to generate `.css` style bundles. It's configured (inside `/webpack.config.js`) to use the following postcss-loader.
 
+#### Uglifyjs plugin
+
+The uglifyjs-webpack-plugin is used to minify sources for production builds.
+
 #### Postcss-loader
 
 Handles loading and processing `.scss`, `.sass` files. Is configured with `autoprefixer`, so css lines are prefixed by vendor names. Configuration is found in `/postcss.config.js`.

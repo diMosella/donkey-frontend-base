@@ -2,9 +2,13 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const devOverrides = require('./webpack.dev.js');
+const prodOverrides = require('./webpack.prod.js');
 
 const PATH_SRC = path.join(__dirname, 'src');
 const PATH_DIST = path.join(__dirname, 'dist');
@@ -22,8 +26,7 @@ process.traceDeprecation = true;
 const SERVER_HOST = 'localhost';
 const SERVER_PORT = process.env.PORT || 8080;
 
-module.exports = {
-  mode: 'development',
+const BASE_CONFIG = {
   entry: {
     app: [
       PATH_START
@@ -88,33 +91,20 @@ module.exports = {
     path: PATH_DIST,
     publicPath: PATH_PUBLIC
   },
-
-  devServer: {
-    colors: true,
-    inline: true,
-    hot: true,
-    contentBase: PATH_DIST,
-    host: SERVER_HOST,
-    port: SERVER_PORT,
-    compress: false,
-    historyApiFallback: true,
-    noInfo: true
-  },
-  devtool: 'source-map',
   plugins: [
     new CleanWebpackPlugin([PATH_DIST]),
 
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
-      template : path.join(PATH_SRC, FILE_INDEX_TEMPLATE),
-      title    : 'Donkey Front-end Base module',
-      hash     : false,
-      favicon  : path.join(PATH_SRC, 'favicon.ico'),
-      filename : FILE_INDEX,
-      inject   : 'head',
-      xhtml    : true,
-      minify   : {
-        collapseWhitespace : true
+      template: path.join(PATH_SRC, FILE_INDEX_TEMPLATE),
+      title: 'Donkey Front-end Base module',
+      hash: false,
+      favicon: path.join(PATH_SRC, 'favicon.ico'),
+      filename: FILE_INDEX,
+      inject: 'head',
+      xhtml: true,
+      minify: {
+        collapseWhitespace: true
       }
     }),
 
@@ -125,4 +115,9 @@ module.exports = {
 
     new webpack.NamedModulesPlugin()
   ]
+};
+
+module.exports = (env, argv) => {
+  const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
+  return merge(BASE_CONFIG, isProd ? prodOverrides : devOverrides(PATH_DIST, SERVER_HOST, SERVER_PORT));
 };
