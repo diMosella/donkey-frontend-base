@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { setVisibilityFilter } from '../state/actions';
 import Link from '../components/Link';
 
@@ -16,9 +17,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-const FilterLink = connect(
+const FilterLink = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Link);
+)(Link));
 
 export default FilterLink;

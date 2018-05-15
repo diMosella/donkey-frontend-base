@@ -18,8 +18,8 @@ describe('(Component) App', () => {
       }
     };
     const store = mockStore(initialState);
-    const component = renderIntoDocument(<Provider store={store}><App /></Provider>);
-    const appElmt = findRenderedDOMComponentWithClass(component, 'todo-list');
+    const component = renderIntoDocument(<App store={store} />);
+    const appElmt = findRenderedDOMComponentWithClass(component, 'baseLayout');
     expect(appElmt).to.be.ok();
   });
 });

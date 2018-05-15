@@ -1,17 +1,23 @@
 import React, { PureComponent } from 'react';
-import Footer from './Footer';
-import AddTodo from '../containers/AddTodo';
-import VisibleTodoList from '../containers/VisibleTodoList';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
+import { BaseLayout } from '../layouts';
 
 class App extends PureComponent {
   render () {
-    return <div className='app'>
-      <AddTodo />
-      <VisibleTodoList />
-      <Footer />
-    </div>;
+    const { store } = this.props;
+    return <Provider store={store}>
+      <Router>
+        <BaseLayout />
+      </Router>
+    </Provider>;
   }
+};
+
+App.propTypes = {
+  store: PropTypes.object.isRequired
 };
 
 export default hot(module)(App);

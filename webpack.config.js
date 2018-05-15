@@ -32,9 +32,12 @@ const BASE_CONFIG = {
       PATH_START
     ],
     libs: [
+      'immer',
+      'prop-types',
       'react',
+      'react-dom',
       'react-redux',
-      'react-router',
+      'react-router-dom',
       'redux'
     ]
   },

@@ -2,6 +2,7 @@ import React from 'react';
 import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import chai from 'chai';
 import dirtyChai from 'dirty-chai';
@@ -21,14 +22,14 @@ describe('(Container) AddTodo', () => {
       }
     };
     const store = mockStore(initialState);
-    const component = renderIntoDocument(<Provider store={store}><AddTodo /></Provider>);
+    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo /></MemoryRouter></Provider>);
     const div = findRenderedDOMComponentWithTag(component, 'div');
     expect(div).to.be.ok();
   });
   it('only does add a Todo when text is provided', () => {
     let text = 'This test Link is added';
     const store = createStore(todoApp);
-    const component = renderIntoDocument(<Provider store={store}><AddTodo /></Provider>);
+    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo /></MemoryRouter></Provider>);
     const button = findRenderedDOMComponentWithTag(component, 'button');
     expect(button).to.be.ok();
     Simulate.click(button);
