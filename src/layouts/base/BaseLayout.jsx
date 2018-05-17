@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Route } from 'react-router-dom';
-import AddTodo from '../../containers/AddTodo';
+import '../../styles/base.scss';
+import { HeaderLayout } from '../';
 import VisibleTodoList from '../../containers/VisibleTodoList';
 import Footer from '../../components/Footer';
 
@@ -8,7 +9,7 @@ class BaseLayout extends PureComponent {
   render = () =>
     <div className='baseLayout'>
       <header>
-        <Route path='/' exact component={AddTodo} />
+        <HeaderLayout />
       </header>
       <main>
         <Route path='/' exact component={VisibleTodoList} />

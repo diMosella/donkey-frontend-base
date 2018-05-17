@@ -53,15 +53,35 @@ The html-webpack-plugin inserts references to javascript and css bundle files in
 
 #### Extract-text plugin
 
-The extract-text-webpack-plugin is used to generate `.css` style bundles. It's configured (inside `/webpack.config.js`) to use the following postcss-loader.
+The extract-text-webpack-plugin is used to generate `.css` style bundles when in development mode. It's configured (inside `/webpack.config.js`) to use the postcss-loader, described below.
 
 #### Uglifyjs plugin
 
 The uglifyjs-webpack-plugin is used to minify sources for production builds.
 
+#### Optimize-css-assets plugin
+
+The optimize-css-assets-webpack-plugin optimizes and minimizes CSS assets.
+
+#### Mini-css-extract-plugin
+
+The mini-css-extract-plugin extracts CSS into separate files when in production mode. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
+
+#### Style-loader
+
+The style-loader creates CSS from JS strings and adds it to the DOM by injecting a `<style>` tag
+
+#### Css-loader
+
+The css-loader translates CSS into CommonJS (interprets @import and url() like 'import ... from' and will resolve them).
+
+#### Sass-loader (and node-sass)
+
+The sass-loader compiles SASS `.scss` to CSS `.css`.
+
 #### Postcss-loader
 
-Handles loading and processing `.scss`, `.sass` files. Is configured with `autoprefixer`, so css lines are prefixed by vendor names. Configuration is found in `/postcss.config.js`.
+Handles preprocessing `.scss`, `.css` files to enable future CSS compatability (lot's of syntactic sugar) Is configured with `autoprefixer`, so css lines are prefixed by vendor names. Configuration is found in `/postcss.config.js`.
 
 #### SVG-URL-loader
 
@@ -133,10 +153,12 @@ donkey-starter-kit
 │    └─── routes
 │    │
 │    └─── state
-│         │
-│         └─── actions
-│         │
-│         └─── reducers
+│    │    │
+│    │    └─── actions
+│    │    │
+│    │    └─── reducers
+│    │
+│    └─── styles
 │
 └─── test
 ```

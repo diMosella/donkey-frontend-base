@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const devOverrides = require('./webpack.dev.js');
 const prodOverrides = require('./webpack.prod.js');
@@ -49,16 +48,6 @@ const BASE_CONFIG = {
         use: [
           'babel-loader'
         ]
-      },
-      {
-        test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: [
-            'style-loader',
-            'css-loader'
-          ],
-          use: 'postcss-loader'
-        })
       },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -110,12 +99,6 @@ const BASE_CONFIG = {
         collapseWhitespace: true
       }
     }),
-
-    /* creates separate css-files in the dist folder */
-    new ExtractTextPlugin({
-      filename: '[name].css'
-    }),
-
     new webpack.NamedModulesPlugin()
   ]
 };

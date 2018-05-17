@@ -9,6 +9,8 @@ let AddTodo = ({ dispatch }) => {
 
   return (
     <div>
+      <aside>{process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()} MODE` : 'MODE NOT SET'}</aside>
+      <span />
       <form onSubmit={evt => {
         evt.preventDefault();
         if (!input.value.trim()) {
@@ -17,8 +19,6 @@ let AddTodo = ({ dispatch }) => {
         dispatch(addTodo(input.value));
         input.value = '';
       }}>
-        {process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()} MODE` : 'MODE NOT SET'}<br />
-        <hr />
         <input ref={node => {
           input = node;
         }} />
