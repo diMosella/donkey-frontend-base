@@ -1,7 +1,9 @@
 import { JSDOM as JsDom } from 'jsdom';
 import { requestAnimationFrame } from 'request-animation-frame';
 
-const dom = new JsDom(`<!doctype html><html><body></body></html>`);
+const dom = new JsDom(`<!doctype html><html><body></body></html>`, {
+  url: 'http://localhost/'
+});
 const win = dom.window;
 const doc = win.document;
 if (!doc.requestAnimationFrame) {

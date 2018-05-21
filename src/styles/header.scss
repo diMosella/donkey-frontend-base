@@ -18,7 +18,8 @@
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
-    border-bottom: 0.1rem solid #f2fbff;
+    border-radius: 0.3rem;
+    border-bottom: 0.3rem solid #fff;
     margin: 0 0.5rem;
     padding: 0 0.3rem;
 
@@ -27,12 +28,18 @@
       padding: 0 0.5rem;
       margin: 0 0.1rem;
       border-radius: 0.3rem 0.3rem 0 0;
-      background-color: #f2fbff;
-      color: #00e;
+      border: 0.05rem solid #eaf3ff;
+      border-bottom-width: 0;
+      color: #fff;
+    }
+
+    a:hover:not(.active) {
+      background-color: #929bbf;
     }
 
     a.active {
-      background-color: #ccd;
+      background-color: #fff;
+      border-color: #fff;
       text-decoration: unset;
       color: #777;
     }

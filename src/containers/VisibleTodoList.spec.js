@@ -16,6 +16,11 @@ describe('(Container) VisibleTodoList', () => {
       todos: [],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ALL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
@@ -36,6 +41,11 @@ describe('(Container) VisibleTodoList', () => {
       ],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ALL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
@@ -56,6 +66,11 @@ describe('(Container) VisibleTodoList', () => {
       ],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_COMPLETED
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
@@ -77,6 +92,11 @@ describe('(Container) VisibleTodoList', () => {
       ],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ACTIVE
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);

@@ -18,6 +18,11 @@ describe('(Layout) HeaderLayout', () => {
       ],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_AL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
@@ -45,6 +50,11 @@ describe('(Layout) HeaderLayout', () => {
       ],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_AL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     delete process.env.NODE_ENV;

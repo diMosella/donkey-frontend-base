@@ -18,6 +18,11 @@ describe('(Layout) BaseLayout', () => {
       ],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_AL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);

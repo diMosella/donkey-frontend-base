@@ -12,24 +12,34 @@ import todoApp from '../state/reducers';
 chai.use(dirtyChai);
 const expect = chai.expect;
 
-describe('(Container) AddTodo', () => {
+describe('(Component) AddTodo', () => {
   it('renders an div-tag', () => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ALL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
-    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo /></MemoryRouter></Provider>);
+    let todoText = '';
+    const onTodoTextSubmit = (text) => { todoText = text; };
+    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo onTodoTextSubmit={onTodoTextSubmit} /></MemoryRouter></Provider>);
     const formElement = findRenderedDOMComponentWithTag(component, 'form');
     expect(formElement).to.be.ok();
+    expect(todoText).to.eql('');
   });
   it('only does add a Todo when text is provided', () => {
     let text = 'This test Link is added';
     const store = createStore(todoApp);
-    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo /></MemoryRouter></Provider>);
+    let todoText = '';
+    const onTodoTextSubmit = (text) => { todoText = text; };
+    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo onTodoTextSubmit={onTodoTextSubmit} /></MemoryRouter></Provider>);
     const button = findRenderedDOMComponentWithTag(component, 'button');
     expect(button).to.be.ok();
     Simulate.click(button);
@@ -45,7 +55,6 @@ describe('(Container) AddTodo', () => {
     Simulate.change(input);
     expect(input.value).to.equal(text);
     Simulate.submit(button);
-    expect(store.getState().todos).to.have.length(1);
-    expect(store.getState().todos[0]).to.have.property('text', text);
+    expect(todoText).to.eql(text);
   });
 });

@@ -9,17 +9,22 @@ import chai, { expect } from 'chai';
 chai.use(dirtyChai);
 
 describe('(Component) App', () => {
-  it('renders an App', () => {
+  it('renders an App in unauthorized mode', () => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ALL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
     const component = renderIntoDocument(<App store={store} />);
-    const appElmt = findRenderedDOMComponentWithClass(component, 'baseLayout');
+    const appElmt = findRenderedDOMComponentWithClass(component, 'unauthorizedLayout');
     expect(appElmt).to.be.ok();
   });
 });

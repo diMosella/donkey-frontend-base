@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { withRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import '../../styles/base.scss';
 import { HeaderLayout } from '../';
 import VisibleTodoList from '../../containers/VisibleTodoList';
@@ -24,4 +24,4 @@ class BaseLayout extends PureComponent {
     </div>;
 }
 
-export default withRouter(BaseLayout);
+export default BaseLayout;

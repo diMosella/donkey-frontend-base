@@ -15,6 +15,11 @@ describe('(Component) Footer', () => {
       todos: [],
       visibility: {
         filter: VISIBILITY_FILTERS.SHOW_ALL
+      },
+      user: {
+        name: '',
+        authorized: false,
+        authorizationPending: false
       }
     };
     const store = mockStore(initialState);
