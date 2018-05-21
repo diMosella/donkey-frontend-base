@@ -1,24 +1,30 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const history = require('connect-history-api-fallback');
+const convert = require('koa-connect');
 
-module.exports = (docRoot, host, port) => ({
+module.exports = (docRoot, urlPath, host, port) => ({
   mode: 'development',
-  devServer: {
-    colors: true,
-    inline: true,
-    hot: true,
-    contentBase: docRoot,
+  serve: {
+    add: (app, middleware, options) => {
+      const historyOptions = {
+        // TODO: headers, rewrites, etc., see: https://github.com/bripkens/connect-history-api-fallback#options
+      };
+      app.use(convert(history(historyOptions)));
+    },
+    content: docRoot,
+    dev: {
+      publicPath: urlPath
+    },
     host: host,
-    port: port,
-    compress: false,
-    historyApiFallback: true,
-    noInfo: true
+    hot: true,
+    port: port
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
+        /* use: ExtractTextPlugin.extract({
           fallback: [
             'style-loader',
             'css-loader'
@@ -27,14 +33,20 @@ module.exports = (docRoot, host, port) => ({
             'postcss-loader',
             'sass-loader'
           ]
-        })
+        }) */
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
   plugins: [
     /* creates separate css-files in the dist folder */
     new ExtractTextPlugin({
-      filename: '[name].css'
+      filename: '[name].[hash].css'
     })
   ]
 });

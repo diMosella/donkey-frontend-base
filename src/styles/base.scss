@@ -6,7 +6,7 @@ html, body {
   overflow: hidden;
   font-family: "Fira Sans";
   font-size: 1rem;
-  font-weight: normal;
+  font-weight: 200;
   line-height: 1.5;
   color: #292b2c;
   background-color: #fff;
@@ -38,29 +38,6 @@ html, body {
         padding: 0.1rem 0.5rem;
         margin-bottom: 0.2rem;
         width: 100%;
-
-        > div {
-          display: inherit;
-          flex-direction: row;
-          width: 100%;
-
-          > aside, > form {
-            display: inherit;
-            flex: 0 0 auto;
-            width: auto;
-          }
-
-          > form {
-            min-width: 13.5rem;
-          }
-
-          > span {
-            display: inherit;
-            flex-basis: 0;
-            flex-grow: 1;
-            max-width: 100%;
-          }
-        }
       }
 
       > main {

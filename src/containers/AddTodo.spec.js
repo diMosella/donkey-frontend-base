@@ -23,8 +23,8 @@ describe('(Container) AddTodo', () => {
     };
     const store = mockStore(initialState);
     const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo /></MemoryRouter></Provider>);
-    const div = findRenderedDOMComponentWithTag(component, 'div');
-    expect(div).to.be.ok();
+    const formElement = findRenderedDOMComponentWithTag(component, 'form');
+    expect(formElement).to.be.ok();
   });
   it('only does add a Todo when text is provided', () => {
     let text = 'This test Link is added';

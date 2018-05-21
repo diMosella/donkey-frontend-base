@@ -99,6 +99,18 @@ Handles loading and processing of files.
 
 Provides reloading code without losing the state of the app, thus making for a shorter feedback loop.
 
+### Webpack-serve
+
+As development webserver, webpack-serve is used.
+
+#### connect-history-api-fallback
+
+This addon to the webpack-serve provides history api fallback. This results in frontend generated routes are directly accessible when requested from the backend. It saves clicking to the specific page.
+
+#### koa-connect
+
+This utility handles connecting additional stuff to the koa webserver used by webpack-serve.
+
 ### EsLint
 
 EsLint is a linter. Linters check your code syntactically, but also with respect to code conventions (style). We include the `eslint-config-standard` which is rich enough compared to, for example `eslint-config-google`. Also `eslint-config-react` (for `.jsx` files) and `eslint-plugin-json` ( for`.json` files) are included. EsLint configuration can be found in the files `/.eslintignore` and `/.eslintrc.json`.

@@ -1,0 +1,40 @@
+.headerLayout {
+  display: inherit;
+  flex-direction: row;
+  width: 100%;
+
+  > aside, > form {
+    display: inherit;
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  > form {
+    min-width: 13.5rem;
+  }
+
+  > nav {
+    display: inherit;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    border-bottom: 0.1rem solid #f2fbff;
+    margin: 0 0.5rem;
+    padding: 0 0.3rem;
+
+    a {
+      display: inherit;
+      padding: 0 0.5rem;
+      margin: 0 0.1rem;
+      border-radius: 0.3rem 0.3rem 0 0;
+      background-color: #f2fbff;
+      color: #00e;
+    }
+
+    a.active {
+      background-color: #ccd;
+      text-decoration: unset;
+      color: #777;
+    }
+  }
+}
