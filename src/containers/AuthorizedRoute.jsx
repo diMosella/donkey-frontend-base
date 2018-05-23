@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 class AuthorizedRoute extends PureComponent {
   render () {
     const { component : Component, authorizationPending, authorized, ...rest } = this.props;
-    console.log('pr', this.props);
     return (
       <Route {...rest} render={(props) => {
         if (authorizationPending) {

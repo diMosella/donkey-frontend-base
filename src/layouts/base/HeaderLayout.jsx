@@ -23,12 +23,20 @@ class HeaderLayout extends PureComponent {
     const { match } = this.props;
     return (
       <div className='headerLayout'>
-        <aside>{process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()} MODE` : 'MODE NOT SET'}</aside>
-        <nav>
-          <NavLink to='/' exact activeClassName='active'>Home</NavLink>
-          <NavLink to='/completed' exact activeClassName='active'>Completed</NavLink>
-        </nav>
-        <Route path={match.path} exact component={connect(mapStateToProps, mapDispatchToProps)(AddTodo)} />
+        <div>
+          <aside>Simple Todos</aside>
+          <nav />
+          <Route path={`${match.path}todos`} exact component={connect(mapStateToProps, mapDispatchToProps)(AddTodo)} />
+          <aside>{process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()} MODE` : 'MODE NOT SET'}</aside>
+        </div>
+        <div>
+          <nav>
+            <NavLink to={match.path} exact activeClassName='active'>Home</NavLink>
+            <NavLink to={`${match.path}auth`} activeClassName='active'>Login</NavLink>
+            <NavLink to={`${match.path}todos`} exact activeClassName='active'>Todos</NavLink>
+            <NavLink to={`${match.path}todos/completed`} exact activeClassName='active'>Completed</NavLink>
+          </nav>
+        </div>
       </div>
     );
   }

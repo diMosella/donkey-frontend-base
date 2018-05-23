@@ -3,13 +3,14 @@ import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { renderIntoDocument, findRenderedDOMComponentWithClass,
-  findRenderedDOMComponentWithTag } from 'react-dom/test-utils';
-import BaseLayout from './BaseLayout';
+  scryRenderedComponentsWithType } from 'react-dom/test-utils';
+import UnauthorizedLayout from './UnauthorizedLayout';
+import Login from '../../components/Login';
 import { VISIBILITY_FILTERS } from '../../state/actions';
 import { expect } from 'chai';
 
-describe('(Layout) BaseLayout', () => {
-  it('renders a div with header, main and footer', () => {
+describe('(Layout) UnauthorizedLayout', () => {
+  it('renders a div with a Login', () => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [
@@ -28,16 +29,12 @@ describe('(Layout) BaseLayout', () => {
     const store = mockStore(initialState);
     const component = renderIntoDocument(
       <Provider store={store}>
-        <MemoryRouter><Route path='/' component={BaseLayout} /></MemoryRouter>
+        <MemoryRouter><Route path='/' component={UnauthorizedLayout} /></MemoryRouter>
       </Provider>
     );
-    const baseLayout = findRenderedDOMComponentWithClass(component, 'baseLayout');
-    expect(baseLayout).to.be.ok();
-    const header = findRenderedDOMComponentWithTag(component, 'header');
-    expect(header).to.be.ok();
-    const main = findRenderedDOMComponentWithTag(component, 'main');
-    expect(main).to.be.ok();
-    const footer = findRenderedDOMComponentWithTag(component, 'footer');
-    expect(footer).to.be.ok();
+    const unAuthorizedLayout = findRenderedDOMComponentWithClass(component, 'unauthorizedLayout');
+    expect(unAuthorizedLayout).to.be.ok();
+    const login = scryRenderedComponentsWithType(component, Login);
+    expect(login).to.be.ok();
   });
 });

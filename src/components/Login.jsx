@@ -6,6 +6,7 @@ class Login extends PureComponent {
     super(props);
     this.registerElement = this.registerElement.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.register = [];
   }
 
@@ -27,6 +28,14 @@ class Login extends PureComponent {
       return;
     }
     onUserNameSubmit(this.register[0].element.value);
+    history.push('/todos');
+    this.register[0].element.value = '';
+  }
+
+  handleClick (evt) {
+    evt.preventDefault();
+    const { logOut, history } = this.props;
+    logOut();
     history.push('/');
     this.register[0].element.value = '';
   }
@@ -37,17 +46,21 @@ class Login extends PureComponent {
       <h1>Login page</h1>
       <span>{`Hello ${name} you are ${authorized ? 'truely' : 'not'} authorized.`}</span>
       <form onSubmit={this.handleSubmit}>
-        <input name='userName' ref={this.registerElement} />
-        <button type='submit'>
+        <input name='userName' ref={this.registerElement} disabled={authorized} />
+        <button type='submit' disabled={authorized}>
           Login
         </button>
       </form>
+      <button onClick={this.handleClick} disabled={!authorized}>
+        Logout
+      </button>
     </div>;
   }
 }
 
 Login.propTypes = {
   onUserNameSubmit: PropTypes.func,
+  logOut: PropTypes.func,
   authorized: PropTypes.bool,
   name: PropTypes.string,
   history: PropTypes.shape({

@@ -19,6 +19,10 @@ const user = (state = USER_INITIAL_STATE, action) =>
           draftState.authorized = true;
         }
         break;
+      case ACTION_TYPES.UNAUTHORIZE_USER:
+        draftState.authorized = false;
+        draftState.name = '';
+        break;
     }
   });
 

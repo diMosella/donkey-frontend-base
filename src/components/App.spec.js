@@ -9,7 +9,7 @@ import chai, { expect } from 'chai';
 chai.use(dirtyChai);
 
 describe('(Component) App', () => {
-  it('renders an App in unauthorized mode', () => {
+  it('renders an App', () => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [],
@@ -24,7 +24,7 @@ describe('(Component) App', () => {
     };
     const store = mockStore(initialState);
     const component = renderIntoDocument(<App store={store} />);
-    const appElmt = findRenderedDOMComponentWithClass(component, 'unauthorizedLayout');
+    const appElmt = findRenderedDOMComponentWithClass(component, 'baseLayout');
     expect(appElmt).to.be.ok();
   });
 });

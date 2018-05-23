@@ -3,13 +3,13 @@ import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { renderIntoDocument, findRenderedDOMComponentWithClass,
-  findRenderedDOMComponentWithTag } from 'react-dom/test-utils';
+  scryRenderedDOMComponentsWithTag } from 'react-dom/test-utils';
 import HeaderLayout from './HeaderLayout';
 import { VISIBILITY_FILTERS } from '../../state/actions';
 import { expect } from 'chai';
 
 describe('(Layout) HeaderLayout', () => {
-  it('renders a div with header, main and footer', () => {
+  it('renders a div with asides, form and navs', () => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [
@@ -33,12 +33,15 @@ describe('(Layout) HeaderLayout', () => {
     );
     const headerLayout = findRenderedDOMComponentWithClass(component, 'headerLayout');
     expect(headerLayout).to.be.ok();
-    const aside = findRenderedDOMComponentWithTag(component, 'aside');
+    const aside = scryRenderedDOMComponentsWithTag(component, 'aside');
     expect(aside).to.be.ok();
-    expect(aside.textContent).to.eql('TEST MODE');
-    const nav = findRenderedDOMComponentWithTag(component, 'nav');
+    expect(aside).to.have.length(2);
+    expect(aside[0].textContent).to.eql('Simple Todos');
+    expect(aside[1].textContent).to.eql('TEST MODE');
+    const nav = scryRenderedDOMComponentsWithTag(component, 'nav');
     expect(nav).to.be.ok();
-    const form = findRenderedDOMComponentWithTag(component, 'form');
+    expect(nav).to.have.length(2);
+    const form = scryRenderedDOMComponentsWithTag(component, 'form');
     expect(form).to.be.ok();
   });
   it('renders when NODE_ENV is not set', () => {
@@ -66,12 +69,14 @@ describe('(Layout) HeaderLayout', () => {
     );
     const headerLayout = findRenderedDOMComponentWithClass(component, 'headerLayout');
     expect(headerLayout).to.be.ok();
-    const aside = findRenderedDOMComponentWithTag(component, 'aside');
+    const aside = scryRenderedDOMComponentsWithTag(component, 'aside');
     expect(aside).to.be.ok();
-    expect(aside.textContent).to.eql('MODE NOT SET');
-    const nav = findRenderedDOMComponentWithTag(component, 'nav');
+    expect(aside).to.have.length(2);
+    expect(aside[1].textContent).to.eql('MODE NOT SET');
+    const nav = scryRenderedDOMComponentsWithTag(component, 'nav');
     expect(nav).to.be.ok();
-    const form = findRenderedDOMComponentWithTag(component, 'form');
+    expect(nav).to.have.length(2);
+    const form = scryRenderedDOMComponentsWithTag(component, 'form');
     expect(form).to.be.ok();
   });
 });

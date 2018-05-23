@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { authorizeUser } from '../../state/actions';
+import { authorizeUser, unAuthorizeUser } from '../../state/actions';
 import Login from '../../components/Login';
 
 const mapStateToProps = (state) => {
@@ -15,6 +15,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUserNameSubmit: (userName) => {
       dispatch(authorizeUser(userName));
+    },
+    logOut: () => {
+      console.log('logOut')
+      dispatch(unAuthorizeUser());
     }
   };
 };

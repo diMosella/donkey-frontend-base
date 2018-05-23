@@ -4,7 +4,8 @@ export const ACTION_TYPES = {
   ADD_TODO: 'ADD_TODO',
   TOGGLE_TODO: 'TOGGLE_TODO',
   SET_VISIBILITY_FILTER: 'SET_VISIBILITY_FILTER',
-  AUTHORIZE_USER: 'AUTHORIZE_USER'
+  AUTHORIZE_USER: 'AUTHORIZE_USER',
+  UNAUTHORIZE_USER: 'UNAUTHORIZE_USER'
 };
 
 export const KNOWN_USERS = {
@@ -43,5 +44,11 @@ export const authorizeUser = (userName) => {
   return {
     type: ACTION_TYPES.AUTHORIZE_USER,
     userName
+  };
+};
+
+export const unAuthorizeUser = () => {
+  return {
+    type: ACTION_TYPES.UNAUTHORIZE_USER
   };
 };
