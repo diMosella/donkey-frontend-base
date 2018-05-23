@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { initialize } from 'react-localize-redux';
+import { initialize, addTranslationForLanguage, getTranslate } from 'react-localize-redux';
 import '../../styles/base.scss';
-import { LANGUAGES_INITIAL_STATE } from '../../state/actions';
+import { AVAILABLE_LANGUAGES_INITIAL_STATE } from '../../state/reducers';
 import { HeaderLayout, UnauthorizedLayout } from '../';
 import AuthorizedRoute from '../../containers/AuthorizedRoute';
 import VisibleTodoList from '../../containers/VisibleTodoList';
@@ -14,21 +14,41 @@ import Footer from '../../components/Footer';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch
+    initializeAvailableLanguages: (defaultLanguage) => {
+      dispatch(initialize({
+        languages: AVAILABLE_LANGUAGES_INITIAL_STATE,
+        options: { defaultLanguage: defaultLanguage }
+      }));
+    },
+    addTranslationsForLanguage: (translations, language) => {
+      dispatch(addTranslationForLanguage(translations, language));
+    }
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    translate: getTranslate(state.localize)
   };
 };
 
 class BaseLayout extends PureComponent {
+  constructor (props) {
+    super(props);
+    props.initializeAvailableLanguages('en');
+  }
+
   componentDidMount = () => {
-    const { dispatch } = this.props;
-    dispatch(initialize(LANGUAGES_INITIAL_STATE));
-  };
+    const { addTranslationsForLanguage } = this.props;
+    addTranslationsForLanguage({ 'appTitle': 'Simpel activiteitenlijstje' }, 'du');
+    addTranslationsForLanguage({ 'appTitle': 'Simple Todos' }, 'en');
+  }
 
   render = () => {
     const { match } = this.props;
     return <div className='baseLayout'>
       <header>
-        <Route component={HeaderLayout} />
+        <Route component={connect(mapStateToProps)(HeaderLayout)} />
       </header>
       <main>
         <Switch>
@@ -47,10 +67,11 @@ class BaseLayout extends PureComponent {
 }
 
 BaseLayout.propTypes = {
-  dispatch: PropTypes.func,
+  initializeAvailableLanguages: PropTypes.func,
+  addTranslationsForLanguage: PropTypes.func,
   match: PropTypes.shape({
     path: PropTypes.string
   })
 };
 
-export default connect(mapDispatchToProps)(BaseLayout);
+export default connect(null, mapDispatchToProps)(BaseLayout);

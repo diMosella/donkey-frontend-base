@@ -17,7 +17,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(authorizeUser(userName));
     },
     logOut: () => {
-      console.log('logOut')
       dispatch(unAuthorizeUser());
     }
   };

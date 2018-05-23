@@ -6,10 +6,6 @@ import '../../styles/header.scss';
 import AddTodo from '../../components/AddTodo';
 import { addTodo } from '../../state/actions';
 
-const mapStateToProps = (state) => {
-  return {};
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoTextSubmit: (text) => {
@@ -20,13 +16,13 @@ const mapDispatchToProps = (dispatch) => {
 
 class HeaderLayout extends PureComponent {
   render = () => {
-    const { match } = this.props;
+    const { match, translate } = this.props;
     return (
       <div className='headerLayout'>
         <div>
-          <aside>Simple Todos</aside>
+          <aside>{translate('appTitle')}</aside>
           <nav />
-          <Route path={`${match.path}todos`} exact component={connect(mapStateToProps, mapDispatchToProps)(AddTodo)} />
+          <Route path={`${match.path}todos`} exact component={connect(null, mapDispatchToProps)(AddTodo)} />
           <aside>{process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()} MODE` : 'MODE NOT SET'}</aside>
         </div>
         <div>
@@ -45,7 +41,8 @@ class HeaderLayout extends PureComponent {
 HeaderLayout.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string.isRequired
-  })
+  }),
+  translate: PropTypes.func
 };
 
 export default HeaderLayout;

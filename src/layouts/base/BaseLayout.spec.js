@@ -23,6 +23,11 @@ describe('(Layout) BaseLayout', () => {
         name: '',
         authorized: false,
         authorizationPending: false
+      },
+      localize: {
+        languages: ['en'],
+        activeLanguage: 'en',
+        options: {}
       }
     };
     const store = mockStore(initialState);

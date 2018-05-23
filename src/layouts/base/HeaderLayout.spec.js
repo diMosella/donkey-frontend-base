@@ -1,6 +1,6 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { renderIntoDocument, findRenderedDOMComponentWithClass,
   scryRenderedDOMComponentsWithTag } from 'react-dom/test-utils';
@@ -23,12 +23,21 @@ describe('(Layout) HeaderLayout', () => {
         name: '',
         authorized: false,
         authorizationPending: false
+      },
+      localize: {
+        languages: [{ code: 'en' }],
+        options: {}
       }
     };
     const store = mockStore(initialState);
+    const mapStateToProps = (state) => ({
+      translate: (id) => 'Simple Todos',
+      currentLanguage: 'en'
+    });
     const component = renderIntoDocument(
       <Provider store={store}>
-        <MemoryRouter><Route path='/' component={HeaderLayout} /></MemoryRouter>
+        <MemoryRouter><Route path='/'
+          component={connect(mapStateToProps)(HeaderLayout)} /></MemoryRouter>
       </Provider>
     );
     const headerLayout = findRenderedDOMComponentWithClass(component, 'headerLayout');
@@ -58,13 +67,22 @@ describe('(Layout) HeaderLayout', () => {
         name: '',
         authorized: false,
         authorizationPending: false
+      },
+      localize: {
+        languages: [],
+        options: {}
       }
     };
     delete process.env.NODE_ENV;
     const store = mockStore(initialState);
+    const mapStateToProps = (state) => ({
+      translate: (id) => { /* intentionally left blank */ },
+      currentLanguage: 'en'
+    });
     const component = renderIntoDocument(
       <Provider store={store}>
-        <MemoryRouter><Route path='/' component={HeaderLayout} /></MemoryRouter>
+        <MemoryRouter><Route path='/'
+          component={connect(mapStateToProps)(HeaderLayout)} /></MemoryRouter>
       </Provider>
     );
     const headerLayout = findRenderedDOMComponentWithClass(component, 'headerLayout');

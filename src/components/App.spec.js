@@ -1,6 +1,5 @@
 import React from 'react';
 import { renderIntoDocument, findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
-import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import App from './App';
 import { VISIBILITY_FILTERS } from '../state/actions';
@@ -20,6 +19,10 @@ describe('(Component) App', () => {
         name: '',
         authorized: false,
         authorizationPending: false
+      },
+      localize: {
+        languages: [],
+        options: {}
       }
     };
     const store = mockStore(initialState);
