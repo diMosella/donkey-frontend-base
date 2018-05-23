@@ -140,6 +140,10 @@ Code coverage is determined by `nyc`, the command-line interface for `istanbul`.
 
 ### Redux
 
+### React-localize-redux
+
+To simplify the localization, this package is used.
+
 ### Immer
 
 To guarantee the immutability of the Redux state, the package `immer` has been used. An alternative might be `immutable.js`. Apart from the facts that it requires significant adjustment of the code and its relatively big size, it also involves additional packages for type checking (`react-immutable-proptypes`) and unit testing (`chai-immutable`).
