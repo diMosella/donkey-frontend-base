@@ -1,7 +1,8 @@
 import React from 'react';
-import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'react-dom/test-utils';
+import { renderIntoDocument, findRenderedDOMComponentWithTag,
+  scryRenderedDOMComponentsWithTag, Simulate } from 'react-dom/test-utils';
 import Login from './Login';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Component) Login', () => {
   it('renders a login page', () => {
@@ -33,19 +34,57 @@ describe('(Component) Login', () => {
     expect(Login).to.be.ok();
     const LoginText = Login.textContent;
     expect(LoginText).to.equal(text);
-  });
-  it('responds to clicks by triggering the provided callback', () => {
-    let isClicked = false;
-    let onClick = (param) => { isClicked = true; };
-    let text = 'This test Login is completed';
+  }); */
+  it('responds to login clicks by triggering the provided callback', () => {
+    const TESTER = 'Tester';
+    let userName = '';
+    let path = '';
+    const onUserNameSubmit = (name) => { userName = name; };
+    const logOut = () => { };
+    const history = {
+      push: (uri) => { path = uri; }
+    };
 
     const component = renderIntoDocument(
-      <Login onClick={onClick} active={false} children={text} />
+      <Login onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} name='userName' />
     );
+    const buttonList = scryRenderedDOMComponentsWithTag(component, 'button');
+    expect(buttonList).to.have.length(2);
+    expect(buttonList[0]).to.have.attribute('type', 'submit');
+    expect(buttonList[0]).to.not.have.attribute('disabled');
+    expect(buttonList[1]).to.not.have.attribute('type');
+    expect(buttonList[1]).to.have.attribute('disabled');
+    Simulate.click(buttonList[0]);
+    expect(userName).to.eql('');
+    const nameInput = findRenderedDOMComponentWithTag(component, 'input');
+    expect(nameInput).to.be.ok();
+    nameInput.value = TESTER;
+    Simulate.change(nameInput.value);
+    Simulate.submit(buttonList[0]);
+    expect(userName).to.eql(TESTER);
+    expect(path).to.eql('/todos');
+  });
+  it('responds to logout clicks by triggering the provided callback', () => {
+    const TESTER = 'Tester';
+    let logOutRequested = false;
+    let path = '';
+    const onUserNameSubmit = (name) => { userName = name; };
+    const logOut = () => { logOutRequested = true; };
+    const history = {
+      push: (uri) => { path = uri; }
+    };
 
-    const Login = findRenderedDOMComponentWithTag(component, 'a');
-    expect(Login).to.be.ok();
-    Simulate.click(Login);
-    expect(isClicked).to.equal(true);
-  }); */
+    const component = renderIntoDocument(
+      <Login onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name={TESTER} />
+    );
+    const buttonList = scryRenderedDOMComponentsWithTag(component, 'button');
+    expect(buttonList).to.have.length(2);
+    expect(buttonList[0]).to.have.attribute('type', 'submit');
+    expect(buttonList[0]).to.have.attribute('disabled');
+    expect(buttonList[1]).to.not.have.attribute('type');
+    expect(buttonList[1]).to.not.have.attribute('disabled');
+    Simulate.click(buttonList[1]);
+    expect(logOutRequested).to.be.true();
+    expect(path).to.eql('/');
+  });
 });

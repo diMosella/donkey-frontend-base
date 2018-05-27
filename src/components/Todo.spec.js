@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderIntoDocument, findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
 import Todo from './Todo';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Component) Todo', () => {
   it('renders a li with striped through text if completed', () => {

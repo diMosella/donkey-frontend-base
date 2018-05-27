@@ -37,6 +37,7 @@
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "chai": "^4.1.2",
+    "chai-dom": "^1.8.0",
     "clean-webpack-plugin": "^0.1.18",
     "connect-history-api-fallback": "^1.5.0",
     "cross-env": "^5.1.6",

@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import FilterLink from './FilterLink';
 import Link from '../components/Link';
 import { VISIBILITY_FILTERS } from '../state/actions';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Container) FilterLink', () => {
   it('renders one Link-component', () => {

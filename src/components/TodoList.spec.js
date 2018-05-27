@@ -4,9 +4,7 @@ import { renderIntoDocument, findRenderedDOMComponentWithClass,
   scryRenderedComponentsWithType, Simulate } from 'react-dom/test-utils';
 import TodoList from './TodoList';
 import Todo from './Todo';
-import dirtyChai from 'dirty-chai';
-import chai, { expect } from 'chai';
-chai.use(dirtyChai);
+const expect = global.chai.expect;
 
 describe('(Component) TodoList', () => {
   it('renders a div with class \'todo-list\'', () => {

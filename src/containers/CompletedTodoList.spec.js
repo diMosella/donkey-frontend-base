@@ -7,7 +7,7 @@ import CompletedTodoList from './CompletedTodoList';
 import TodoList from '../components/TodoList';
 import Todo from '../components/Todo';
 import { VISIBILITY_FILTERS } from '../state/actions';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Container) CompletedTodoList', () => {
   it('renders one TodoList-component', () => {

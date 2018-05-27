@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'react-dom/test-utils';
 import Link from './Link';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Component) Link', () => {
   it('renders an a-tag with text when inactive', () => {

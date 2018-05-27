@@ -15,14 +15,12 @@ import Footer from '../../components/Footer';
 const mapDispatchToProps = (dispatch) => {
   return {
     initializeAvailableLanguages: (defaultLanguage) => {
-      console.log('Initialized', defaultLanguage);
       dispatch(initialize({
         languages: AVAILABLE_LANGUAGES_INITIAL_STATE,
         options: { defaultLanguage: defaultLanguage }
       }));
     },
     addTranslationsForLanguage: (translations, language) => {
-      console.log('Translations', translations);
       dispatch(addTranslationForLanguage(translations, language));
     }
   };
@@ -41,7 +39,6 @@ class BaseLayout extends PureComponent {
   }
 
   componentDidMount = () => {
-    console.log('Mounted');
     const { addTranslationsForLanguage } = this.props;
     addTranslationsForLanguage({ 'appTitle': 'Simpel activiteitenlijstje' }, 'du');
     addTranslationsForLanguage({ 'appTitle': 'Simple Todos' }, 'en');

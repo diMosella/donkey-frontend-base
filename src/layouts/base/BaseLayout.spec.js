@@ -5,7 +5,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import BaseLayout from './BaseLayout';
 import { VISIBILITY_FILTERS } from '../../state/actions';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Layout) BaseLayout', () => {
   it('renders a div with header, main and footer', () => {

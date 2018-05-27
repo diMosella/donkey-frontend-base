@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Footer from './Footer';
 import Link from './Link';
 import { VISIBILITY_FILTERS } from '../state/actions';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Component) Footer', () => {
   it('renders a Footer-component with 3 Link-components as children', () => {

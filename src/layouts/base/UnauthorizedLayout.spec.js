@@ -7,7 +7,7 @@ import { renderIntoDocument, findRenderedDOMComponentWithClass,
 import UnauthorizedLayout from './UnauthorizedLayout';
 import Login from '../../components/Login';
 import { VISIBILITY_FILTERS } from '../../state/actions';
-import { expect } from 'chai';
+const expect = global.chai.expect;
 
 describe('(Layout) UnauthorizedLayout', () => {
   it('renders a div with a Login', () => {

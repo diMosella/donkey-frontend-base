@@ -130,6 +130,14 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 Chai is a test assertion library providing `should`,  `expect` and `assert`.
 
+#### Dirty-chai
+
+The plugin dirty-chai facilitates in correctly linted syntax.
+
+#### Chai-dom
+
+The plugin chai-dom provide utilities to make assertions on the dom-elements.
+
 ### Enzyme
 
 Enzyme is a testing utility for React, which makes it easier to traverse through react components.

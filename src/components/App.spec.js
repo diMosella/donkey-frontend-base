@@ -3,9 +3,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import App from './App';
 import { VISIBILITY_FILTERS } from '../state/actions';
-import dirtyChai from 'dirty-chai';
-import chai, { expect } from 'chai';
-chai.use(dirtyChai);
+const expect = global.chai.expect;
 
 describe('(Component) App', () => {
   it('renders an App', () => {
