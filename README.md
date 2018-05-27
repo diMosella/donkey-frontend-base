@@ -130,6 +130,14 @@ See https://ole.michelsen.dk/blog/testing-reactjs-with-coverage-using-mocha-babe
 
 Chai is a test assertion library providing `should`,  `expect` and `assert`.
 
+### Enzyme
+
+Enzyme is a testing utility for React, which makes it easier to traverse through react components.
+
+#### Enzyme-adapter-react-16
+
+To use with the specific version of react, an adapter for enzyme is necessary.
+
 ### Nyc
 
 Code coverage is determined by `nyc`, the command-line interface for `istanbul`. Configuration is found in `/.nycrc`.

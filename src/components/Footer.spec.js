@@ -25,7 +25,7 @@ describe('(Component) Footer', () => {
     const store = mockStore(initialState);
     const component = renderIntoDocument(
       <Provider store={store}>
-        <MemoryRouter><Footer /></MemoryRouter>
+        <MemoryRouter><Footer location={{ pathname: '/todos' }} /></MemoryRouter>
       </Provider>
     );
     const footerList = scryRenderedComponentsWithType(component, Footer);

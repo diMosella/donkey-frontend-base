@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderIntoDocument, findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
+import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import App from './App';
 import { VISIBILITY_FILTERS } from '../state/actions';
@@ -26,8 +26,7 @@ describe('(Component) App', () => {
       }
     };
     const store = mockStore(initialState);
-    const component = renderIntoDocument(<App store={store} />);
-    const appElmt = findRenderedDOMComponentWithClass(component, 'baseLayout');
-    expect(appElmt).to.be.ok();
+    const component = shallow(<App store={store} />);
+    expect(component).to.be.ok();
   });
 });
