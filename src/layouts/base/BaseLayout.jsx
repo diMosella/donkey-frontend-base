@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { initialize, addTranslationForLanguage, getTranslate } from 'react-localize-redux';
 import '../../styles/base.scss';
 import { AVAILABLE_LANGUAGES_INITIAL_STATE } from '../../state/reducers';
@@ -17,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
     initializeAvailableLanguages: (defaultLanguage) => {
       dispatch(initialize({
         languages: AVAILABLE_LANGUAGES_INITIAL_STATE,
-        options: { defaultLanguage: defaultLanguage }
+        options: { defaultLanguage: defaultLanguage, renderToStaticMarkup }
       }));
     },
     addTranslationsForLanguage: (translations, language) => {
