@@ -1,4 +1,4 @@
-<a href='https://github.com/diMosella'>
+<a href='https://gitlab.com/diMosella'>
   <img alt='Donkey Front-end Base module' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
 
@@ -25,7 +25,7 @@ Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens.
 ## Clone the project:
 
 ```bash
-$ git clone https://github.com/diMosella/donkey-starter-kit.git <my-folder-name>
+$ git clone https://gitlab.com/diMosella/donkey-starter-kit.git <my-folder-name>
 $ cd <my-project-name>
 ```
 
