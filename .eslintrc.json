@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "standard-react"
+  ],
+  "plugins": [
+    "babel",
+    "react",
+    "promise",
+    "json"
+  ],
+  "env": {
+    "browser" : true,
+    "mocha"   : true
+  },
+  "globals": {
+    "__DEV__"      : false
+  },
+  "rules": {
+    "semi"                 : [1, "always"],
+    "key-spacing"          : 0,
+    "jsx-quotes"           : [1, "prefer-single"],
+    "max-len"              : [1, 120, 2],
+    "object-curly-spacing" : [1, "always"]
+  }
+}

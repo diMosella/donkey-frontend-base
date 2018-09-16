@@ -1,19 +1,95 @@
 {
   "name": "donkey-frontend-base",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A base module for frontend (web-)development",
   "main": "index.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-serve",
+    "build": "webpack --mode production",
+    "test": "NODE_ENV=test mocha",
+    "test:watch": "NODE_ENV=test mocha --watch --reporter min --watch-extensions jsx",
+    "test:cover": "cross-env NODE_ENV=test nyc _mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/diMosella/donkey-frontend-base.git"
+    "url": "git+https://gitlab.com/diMosella/donkey-frontend-base.git"
   },
+  "keywords": [
+    "Donkey",
+    "Front-end",
+    "Base module"
+  ],
   "author": "diMosella",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/diMosella/donkey-frontend-base/issues"
+    "url": "https://gitlab.com/diMosella/donkey-frontend-base/issues"
   },
-  "homepage": "https://github.com/diMosella/donkey-frontend-base#readme"
+  "homepage": "https://gitlab.com/diMosella/donkey-frontend-base#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-istanbul": "^4.1.6",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-dom": "^1.8.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "connect-history-api-fallback": "^1.5.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.0",
+    "dirty-chai": "^2.0.1",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "eslint": "^5.5.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-babel": "^5.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-json": "^1.2.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "next",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^11.12.0",
+    "jsdom-global": "^3.0.2",
+    "koa-connect": "^2.0.1",
+    "mini-css-extract-plugin": "^0.4.2",
+    "mocha": "^5.2.0",
+    "node-sass": "^4.9.3",
+    "nyc": "^12.0.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^2.1.6",
+    "react-hot-loader": "^4.3.6",
+    "redux-mock-store": "^1.5.3",
+    "request-animation-frame": "^0.1.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.21.0",
+    "stylelint": "^9.5.0",
+    "svg-url-loader": "^2.3.2",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.18.0",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4",
+    "webpack-serve": "^2.0.2"
+  },
+  "dependencies": {
+    "immer": "^1.6.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-localize-redux": "^3.3.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0"
+  }
 }

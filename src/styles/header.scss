@@ -1,0 +1,56 @@
+.headerLayout {
+  display: inherit;
+  flex-direction: column;
+  width: 100%;
+
+  > div {
+    display: inherit;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    > aside, > form {
+      display: inherit;
+      flex: 0 0 auto;
+      width: auto;
+    }
+
+    > form {
+      min-width: 13.5rem;
+    }
+
+    > nav {
+      display: inherit;
+      flex-basis: 0;
+      flex-grow: 1;
+      max-width: 100%;
+
+      a {
+        display: inherit;
+        padding: 0 0.5rem;
+        margin: 0 0.1rem;
+        border-radius: 0.3rem 0.3rem 0 0;
+        border: 0.05rem solid #eaf3ff;
+        border-bottom-width: 0;
+        color: #fff;
+      }
+
+      a:hover:not(.active) {
+        background-color: #929bbf;
+      }
+
+      a.active {
+        background-color: #fff;
+        border-color: #fff;
+        text-decoration: unset;
+        color: #777;
+      }
+    }
+  }
+
+  > div:not(:first-of-type) > nav {
+    border-radius: 0.3rem;
+    border-bottom: 0.3rem solid #fff;
+    margin: 0;
+    padding: 0 0.3rem;
+  }
+}

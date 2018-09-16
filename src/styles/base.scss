@@ -1,0 +1,66 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: "Fira Sans";
+  font-size: 1rem;
+  font-weight: 200;
+  line-height: 1.5;
+  color: #292b2c;
+  background-color: #fff;
+  display: flex;
+
+  #app {
+    width: inherit;
+    height: inherit;
+    display: inherit;
+    background-color: #f2fbff;
+
+    .baseLayout {
+      height: inherit;
+      display: inherit;
+      flex-direction: column;
+      flex: 1;
+      flex-basis: 0;
+      flex-grow: 1;
+      max-width: 100%;
+      padding: 0;
+
+      > header {
+        display: inherit;
+        flex-wrap: wrap;
+        color: #fff;
+        background-color: #01547d;
+        border-bottom: 1px solid #01405e;
+        box-shadow: 0.06rem 0.125rem 0.125rem rgba(0, 0, 0, 0.3);
+        padding: 0.1rem 0.5rem;
+        margin-bottom: 0.2rem;
+      }
+
+      > main {
+        display: inherit;
+        flex: 1;
+        flex-wrap: wrap;
+        background: white;
+        border-radius: 0.15rem;
+        box-sizing: border-box;
+        box-shadow: 0 0.05rem 0.25rem 0.05rem rgba(0, 0, 0, 0.5);
+        margin: 0.5rem;
+        padding: 0.3rem;
+      }
+
+      > footer {
+        display: inherit;
+        flex-wrap: wrap;
+        margin: 0 0.2rem;
+        padding: 0.3rem;
+
+        p {
+          margin: 0.25rem 0;
+        }
+      }
+    }
+  }
+}
