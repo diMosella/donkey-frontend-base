@@ -2,7 +2,7 @@
   <img alt='Donkey Front-end Base module' src='https://vanmoosel.nl/github/donkey.svg' width='100%' height='144'>
 </a>
 
-[![Build Status](https://travis-ci.org/diMosella/donkey-starter-kit.svg?branch=master)](https://travis-ci.org/diMosella/donkey-starter-kit) [![dependencies status](https://david-dm.org/diMosella/donkey-starter-kit.svg)](https://david-dm.org/diMosella/donkey-starter-kit) [![devDependencies status](https://david-dm.org/diMosella/donkey-starter-kit/dev-status.svg)](https://david-dm.org/diMosella/donkey-starter-kit/?type=dev)
+[![Build Status](https://travis-ci.org/diMosella/donkey-frontend-base.svg?branch=master)](https://travis-ci.org/diMosella/donkey-frontend-base) [![dependencies status](https://david-dm.org/diMosella/donkey-frontend-base.svg)](https://david-dm.org/diMosella/donkey-frontend-base) [![devDependencies status](https://david-dm.org/diMosella/donkey-frontend-base/dev-status.svg)](https://david-dm.org/diMosella/donkey-frontend-base/?type=dev)
 
 # Donkey Front-end Base
 
@@ -29,8 +29,8 @@ todos are moved to Project Setup base platform
 ### Clone the project:
 
 ```bash
-$ git clone https://gitlab.com/diMosella/donkey-starter-kit.git <my-folder-name>
-$ cd <my-project-name>
+$ git clone https://gitlab.com/diMosella/donkey-frontend-base.git <my-folder-name>
+$ cd <my-folder-name>
 ```
 
 #### Install dependencies:
