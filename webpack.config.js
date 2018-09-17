@@ -35,6 +35,7 @@ const BASE_CONFIG = {
       'prop-types',
       'react',
       'react-dom',
+      'react-localize-redux',
       'react-redux',
       'react-router-dom',
       'redux'

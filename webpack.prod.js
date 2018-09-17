@@ -6,6 +6,9 @@ module.exports = {
   mode: 'production',
   devtool: 'source-map',
   optimization: {
+    splitChunks: {
+      chunks: 'all'
+    },
     minimizer: [
       new UglifyJSPlugin({
         cache: true,

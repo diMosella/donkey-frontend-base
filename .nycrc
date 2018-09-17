@@ -23,7 +23,7 @@
     "lcov",
     "text"
   ],
-  "require": "babel-core/register",
+  "require": "@babel/register",
   "sourceMap": false,
   "instrument": false,
   "cache": true,
