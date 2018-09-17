@@ -14,6 +14,25 @@ Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens. And
 
 todos are moved to Project Setup base platform
 
+## Commit messages format
+
+Try to maintain the following commit message format:
+
+  ```
+  <type>(<scope>): <subject>
+  ```
+  With, for `<type>`, either one of:
+  - **build**: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+  - **ci**: Changes to CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+  - **docs**: Documentation only changes
+  - **feat**: A new feature
+  - **fix**: A bug fix
+  - **perf**: A code change that improves performance
+  - **refactor**: A code change that neither fixes a bug nor adds a feature
+  - **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+  - **test**: Adding missing tests or correcting existing tests
+
+
 ## Getting started
 
 ### For Visual Studio Code:
@@ -45,7 +64,7 @@ $ npm install
 
 #### Babel
 
-Babel is used to transpile EcmaScript into JavaScript. This enables developers to use more Object Oriented Programming constructs, and provides syntactic sugar in several ways. To use Babel 6, we include `babel-core` (for CLI and basics) and `babel-runtime` + `babel-plugin-transform-runtime` (for libraries, but without polluting global namespace (which `babel-polyfill` does.)). The Babel configuration is stored in the file `/.babelrc`. We use `es2015` with `react` and `stage-0` for future EcmaScript options.
+Babel is used to transpile EcmaScript into JavaScript. This enables developers to use more Object Oriented Programming constructs, and provides syntactic sugar in several ways. To use Babel 7, we include `@babel/core` (for CLI and basics) and `@babel/runtime` + `@babel/plugin-transform-runtime` (for libraries, but without polluting global namespace (which `babel-polyfill` does.)). The Babel configuration is stored in the file `/.babelrc`.
 
 #### Webpack
 
