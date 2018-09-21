@@ -10,7 +10,7 @@ A base setup to facilitate easier start of frontend (web-)development.
 
 Why the 'Donkey'-name? Donkeys are known to serve people by lifting burdens. And that's exactly what is the purpose of this repository.
 
-## TODO
+## TODO:
 
 todos are moved to Project Setup base platform
 

@@ -7,8 +7,7 @@ import { createStore } from 'redux';
 import AddTodo from './AddTodo';
 import { VISIBILITY_FILTERS } from '../state/actions';
 import todoApp from '../state/reducers';
-const expect = global.chai.expect;
-
+const { expect } = global.chai;
 describe('(Component) AddTodo', () => {
   it('renders an div-tag', () => {
     const mockStore = configureMockStore();
