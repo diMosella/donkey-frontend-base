@@ -44,7 +44,7 @@ class Login extends PureComponent {
     const { authorized, name } = this.props;
     return <div>
       <h1>Login page</h1>
-      <span>{`Hello ${name} you are ${authorized ? 'truely' : 'not'} authorized.`}</span>
+      <span>{`Hello${name ? ` ${name}` : ''}, you are ${authorized ? 'truely' : 'not'} authorized.`}</span>
       <form onSubmit={this.handleSubmit}>
         <input name='userName' ref={this.registerElement} disabled={authorized} />
         <button type='submit' disabled={authorized}>

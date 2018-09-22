@@ -25,7 +25,13 @@ describe('(Component) AddTodo', () => {
     const store = mockStore(initialState);
     let todoText = '';
     const onTodoTextSubmit = (text) => { todoText = text; };
-    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo onTodoTextSubmit={onTodoTextSubmit} /></MemoryRouter></Provider>);
+    const component = renderIntoDocument(
+      <Provider store={store}>
+        <MemoryRouter>
+          <AddTodo onTodoTextSubmit={onTodoTextSubmit} />
+        </MemoryRouter>
+      </Provider>
+    );
     const formElement = findRenderedDOMComponentWithTag(component, 'form');
     expect(formElement).to.be.ok();
     expect(todoText).to.eql('');
@@ -35,7 +41,13 @@ describe('(Component) AddTodo', () => {
     const store = createStore(todoApp);
     let todoText = '';
     const onTodoTextSubmit = (text) => { todoText = text; };
-    const component = renderIntoDocument(<Provider store={store}><MemoryRouter><AddTodo onTodoTextSubmit={onTodoTextSubmit} /></MemoryRouter></Provider>);
+    const component = renderIntoDocument(
+      <Provider store={store}>
+        <MemoryRouter>
+          <AddTodo onTodoTextSubmit={onTodoTextSubmit} />
+        </MemoryRouter>
+      </Provider>
+    );
     const button = findRenderedDOMComponentWithTag(component, 'button');
     expect(button).to.be.ok();
     Simulate.click(button);

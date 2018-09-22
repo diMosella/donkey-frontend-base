@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderIntoDocument, findRenderedDOMComponentWithTag,
   scryRenderedDOMComponentsWithTag, Simulate } from 'react-dom/test-utils';
+import { shallow } from 'enzyme';
 import Login from './Login';
 const expect = global.chai.expect;
 
@@ -22,19 +23,24 @@ describe('(Component) Login', () => {
     expect(loginHeader).to.be.ok();
     expect(loginHeader.textContent).to.equal('Login page');
   });
-  /* it('renders a span-tag with text when active', () => {
+  it('renders a span-tag with text when active', () => {
     let onClick = (param) => null;
-    let text = 'This test Login is completed';
 
-    const component = renderIntoDocument(
-      <Login onClick={onClick} active children={text} />
+    const component = shallow(
+      <Login onClick={onClick} active />
     );
 
-    const Login = findRenderedDOMComponentWithTag(component, 'span');
-    expect(Login).to.be.ok();
-    const LoginText = Login.textContent;
-    expect(LoginText).to.equal(text);
-  }); */
+    const unAuthorizedFeedback = component.find('span');
+    expect(unAuthorizedFeedback).to.be.ok();
+    const unAuthorizedFeedbackText = unAuthorizedFeedback.text();
+    expect(unAuthorizedFeedbackText).to.equal('Hello, you are not authorized.');
+
+    component.setProps({ authorized: true, name: 'me' });
+    const authorizedFeedback = component.find('span');
+    expect(authorizedFeedback).to.be.ok();
+    const authorizedFeedbackText = authorizedFeedback.text();
+    expect(authorizedFeedbackText).to.equal('Hello me, you are truely authorized.');
+  });
   it('responds to login clicks by triggering the provided callback', () => {
     const TESTER = 'Tester';
     let userName = '';
@@ -68,7 +74,7 @@ describe('(Component) Login', () => {
     const TESTER = 'Tester';
     let logOutRequested = false;
     let path = '';
-    const onUserNameSubmit = (name) => { userName = name; };
+    const onUserNameSubmit = (name) => null;
     const logOut = () => { logOutRequested = true; };
     const history = {
       push: (uri) => { path = uri; }
