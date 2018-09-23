@@ -44,9 +44,9 @@ describe('(Layout) HeaderLayout', () => {
     expect(headerLayout).to.be.ok();
     const aside = scryRenderedDOMComponentsWithTag(component, 'aside');
     expect(aside).to.be.ok();
-    expect(aside).to.have.length(2);
+    expect(aside).to.have.length(3);
     expect(aside[0].textContent).to.eql('Simple Todos');
-    expect(aside[1].textContent).to.eql('TEST MODE');
+    expect(aside[2].textContent).to.eql('TEST MODE');
     const nav = scryRenderedDOMComponentsWithTag(component, 'nav');
     expect(nav).to.be.ok();
     expect(nav).to.have.length(2);
@@ -89,8 +89,8 @@ describe('(Layout) HeaderLayout', () => {
     expect(headerLayout).to.be.ok();
     const aside = scryRenderedDOMComponentsWithTag(component, 'aside');
     expect(aside).to.be.ok();
-    expect(aside).to.have.length(2);
-    expect(aside[1].textContent).to.eql('MODE NOT SET');
+    expect(aside).to.have.length(3);
+    expect(aside[2].textContent).to.eql('MODE NOT SET');
     const nav = scryRenderedDOMComponentsWithTag(component, 'nav');
     expect(nav).to.be.ok();
     expect(nav).to.have.length(2);
@@ -134,7 +134,7 @@ describe('(Layout) HeaderLayout', () => {
     expect(headerLayout).to.be.ok();
     const aside = scryRenderedDOMComponentsWithTag(component, 'aside');
     expect(aside).to.be.ok();
-    expect(aside).to.have.length(2);
+    expect(aside).to.have.length(3);
     const nav = scryRenderedDOMComponentsWithTag(component, 'nav');
     expect(nav).to.be.ok();
     expect(nav).to.have.length(2);
