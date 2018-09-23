@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 class LanguageList extends PureComponent {
   render () {
     const { languages, activeLanguage, setActiveLanguage } = this.props;
-    console.log('languages', languages, activeLanguage, setActiveLanguage);
-    return <ul className='languageToggle'>
+    return <ul className='languageList'>
       {languages.map(language => (
         <li key={language.code}>
           <button onClick={() => setActiveLanguage(language.code)} disabled={activeLanguage.code === language.code}>

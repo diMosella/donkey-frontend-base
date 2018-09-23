@@ -3,8 +3,14 @@
   flex-direction: column;
   width: 100%;
 
-  .languageList ul {
+  ul.languageList {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
     li {
+      button {
+        margin: 0 0.33rem;
+      }
       float: left;
     }
   }
