@@ -3,10 +3,9 @@ import { localizeReducer } from 'react-localize-redux';
 import todos from './todos';
 import visibility from './visibility';
 import user from './user';
-import { AVAILABLE_LANGUAGES_INITIAL_STATE as initialState } from './locale';
+import { LOCALIZE_INITIAL_STATE as localizeInitialState } from './locale';
 
-// Named languages, for
-export const AVAILABLE_LANGUAGES_INITIAL_STATE = initialState;
+export const LOCALIZE_INITIAL_STATE = localizeInitialState;
 
 const todoApp = combineReducers({
   todos,

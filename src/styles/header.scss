@@ -3,6 +3,12 @@
   flex-direction: column;
   width: 100%;
 
+  .languageList ul {
+    li {
+      float: left;
+    }
+  }
+
   > div {
     display: inherit;
     flex-direction: row;

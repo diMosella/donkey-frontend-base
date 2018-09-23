@@ -212,6 +212,8 @@ donkey-frontend-base
 │    │    └─── actions
 │    │    │
 │    │    └─── reducers
+│    │    │
+│    │    └─── resources
 │    │
 │    └─── styles
 │
