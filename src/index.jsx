@@ -1,10 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
-import todoApp from './state/reducers';
+import { devToolsEnhancer } from 'redux-devtools-extension';
+import appReducers from './state/reducers';
 import App from './components/App';
 
-const store = createStore(todoApp);
+const store = process.env.NODE_ENV === 'development'
+  ? createStore(
+    appReducers,
+    // preloadedstate,
+    devToolsEnhancer()
+  )
+  : createStore(appReducers);
 
 document.addEventListener('DOMContentLoaded', event => {
   render(

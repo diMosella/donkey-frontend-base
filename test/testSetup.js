@@ -19,6 +19,8 @@ if (!document.requestAnimationFrame) {
   document.requestAnimationFrame = requestAnimationFrame;
 }
 
+// FIXME: currently all libraries depend on globally availability of window and document objects
+// This is not recommended, see: https://github.com/jsdom/jsdom/wiki/Don't-stuff-jsdom-globals-onto-the-Node-global
 global.document = document;
 global.window = window;
 chai.use(chaiDom);

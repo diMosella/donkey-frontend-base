@@ -105,7 +105,6 @@ const BASE_CONFIG = {
 };
 
 module.exports = (env, argv) => {
-  // TODO: could be more specific, when using webpack-serve (process.env.WEBPACK_SERVE)
   const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
   return merge(BASE_CONFIG, isProd ? prodOverrides : devOverrides(PATH_DIST, PATH_PUBLIC, SERVER_HOST, SERVER_PORT));
 };

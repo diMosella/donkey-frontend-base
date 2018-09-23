@@ -7,11 +7,11 @@ import { LOCALIZE_INITIAL_STATE as localizeInitialState } from './locale';
 
 export const LOCALIZE_INITIAL_STATE = localizeInitialState;
 
-const todoApp = combineReducers({
+const appReducers = combineReducers({
   todos,
   visibility,
   user,
   localize: localizeReducer
 });
 
-export default todoApp;
+export default appReducers;

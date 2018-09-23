@@ -122,17 +122,13 @@ Handles loading and processing of files.
 
 Provides reloading code without losing the state of the app, thus making for a shorter feedback loop.
 
-#### Webpack-serve
+#### Webpack dev server
 
-As development webserver, webpack-serve is used.
+As development webserver, `webpack-dev-server` is used. Previously, the package which was under active development - `webpack-serve` was used. Currently, they switched active development back to `webpack-dev-server`.
 
-##### connect-history-api-fallback
+#### Redux devtools
 
-This addon to the webpack-serve provides history api fallback. This results in frontend generated routes are directly accessible when requested from the backend. It saves clicking to the specific page.
-
-##### koa-connect
-
-This utility handles connecting additional stuff to the koa webserver used by webpack-serve.
+To inspect the Redux state and changes thereof, `redux-devtools-extension` is being used while in development mode.
 
 #### EsLint
 

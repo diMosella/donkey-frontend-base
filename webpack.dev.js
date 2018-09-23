@@ -1,23 +1,23 @@
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
 
 module.exports = (docRoot, urlPath, host, port) => ({
   mode: 'development',
-  serve: {
-    add: (app, middleware, options) => {
-      const historyOptions = {
-        // TODO: headers, rewrites, etc., see: https://github.com/bripkens/connect-history-api-fallback#options
-      };
-      app.use(convert(history(historyOptions)));
-    },
-    content: docRoot,
-    dev: {
-      publicPath: urlPath
-    },
+  devServer: {
+    contentBase: docRoot,
+    publicPath: urlPath,
     host: host,
+    port: port,
     hot: true,
-    port: port
+    compress: true,
+    historyApiFallback: true,
+    watchContentBase: true
+  },
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000,
+    ignored: ['node_modules', 'src/**/*.spec.js']
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
@@ -47,6 +47,7 @@ module.exports = (docRoot, urlPath, host, port) => ({
     /* creates separate css-files in the dist folder */
     new ExtractTextPlugin({
       filename: '[name].[hash].css'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 });

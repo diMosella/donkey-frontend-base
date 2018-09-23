@@ -4,7 +4,7 @@
   "description": "A base module for frontend (web-)development",
   "main": "index.jsx",
   "scripts": {
-    "start": "webpack-serve",
+    "start": "webpack-dev-server",
     "build": "webpack --mode production",
     "test": "NODE_ENV=test mocha",
     "test:watch": "NODE_ENV=test mocha --watch --reporter min --watch-extensions jsx",
@@ -41,7 +41,6 @@
     "chai": "^4.1.2",
     "chai-dom": "^1.8.0",
     "clean-webpack-plugin": "^0.1.19",
-    "connect-history-api-fallback": "^1.5.0",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "dirty-chai": "^2.0.1",
@@ -62,7 +61,6 @@
     "html-webpack-plugin": "^3.2.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^12.0.0",
-    "koa-connect": "^2.0.1",
     "mini-css-extract-plugin": "^0.4.2",
     "mocha": "^5.2.0",
     "node-sass": "^4.9.3",
@@ -70,6 +68,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "react-hot-loader": "^4.3.6",
+    "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
     "request-animation-frame": "^0.1.1",
     "sass-loader": "^7.1.0",
@@ -80,8 +79,8 @@
     "url-loader": "^1.1.1",
     "webpack": "^4.18.0",
     "webpack-cli": "^3.1.0",
-    "webpack-merge": "^4.1.4",
-    "webpack-serve": "^2.0.2"
+    "webpack-dev-server": "^3.1.8",
+    "webpack-merge": "^4.1.4"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
