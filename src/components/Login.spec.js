@@ -1,11 +1,40 @@
 import React from 'react';
+import configureMockStore from 'redux-mock-store';
+import { connect } from 'react-redux';
 import { renderIntoDocument, findRenderedDOMComponentWithTag,
   scryRenderedDOMComponentsWithTag, Simulate } from 'react-dom/test-utils';
-import { shallow } from 'enzyme';
 import Login from './Login';
 const expect = global.chai.expect;
 
 describe('(Component) Login', () => {
+  let store;
+  let WrappedLogin;
+  before(() => {
+    const mockStore = configureMockStore();
+    const initialState = {
+      localize: {
+        languages: [{ code: 'en' }],
+        options: {}
+      }
+    };
+    const mapStateToProps = (state) => ({
+      translate: (id, params) => {
+        switch (id) {
+          case 'main.login.title':
+            return 'testTitle';
+          case 'main.login.status.true':
+            return `testStatusTrue [${params.name}]`;
+          case 'main.login.status.false':
+            return `testStatusFalse [${params.name}]`;
+          default:
+            return 'no translation';
+        }
+      },
+      currentLanguage: 'en'
+    });
+    store = mockStore(initialState);
+    WrappedLogin = connect(mapStateToProps)(Login);
+  });
   it('renders a login page', () => {
     const onUserNameSubmit = (name) => {};
     const logOut = () => {};
@@ -14,32 +43,35 @@ describe('(Component) Login', () => {
     };
 
     const component = renderIntoDocument(
-      <Login onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name='me' />
+      <WrappedLogin store={store} onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name='me' />
     );
 
     const login = findRenderedDOMComponentWithTag(component, 'div');
     expect(login).to.be.ok();
     const loginHeader = findRenderedDOMComponentWithTag(component, 'h1');
     expect(loginHeader).to.be.ok();
-    expect(loginHeader.textContent).to.equal('Login page');
+    expect(loginHeader.textContent).to.equal('testTitle');
   });
-  it('renders a span-tag with text when active', () => {
+  it('renders a span-tag with text when unauthorized', () => {
     let onClick = (param) => null;
 
-    const component = shallow(
-      <Login onClick={onClick} active />
+    const component = renderIntoDocument(
+      <WrappedLogin store={store} onClick={onClick} active />
     );
 
-    const unAuthorizedFeedback = component.find('span');
+    const unAuthorizedFeedback = findRenderedDOMComponentWithTag(component, 'span');
     expect(unAuthorizedFeedback).to.be.ok();
-    const unAuthorizedFeedbackText = unAuthorizedFeedback.text();
-    expect(unAuthorizedFeedbackText).to.equal('Hello, you are not authorized.');
+    expect(unAuthorizedFeedback.textContent).to.equal('testStatusFalse []');
+  });
+  it('renders a span-tag with text when authorized', () => {
+    let onClick = (param) => null;
 
-    component.setProps({ authorized: true, name: 'me' });
-    const authorizedFeedback = component.find('span');
+    const component = renderIntoDocument(
+      <WrappedLogin store={store} onClick={onClick} active authorized name='me' />
+    );
+    const authorizedFeedback = findRenderedDOMComponentWithTag(component, 'span');
     expect(authorizedFeedback).to.be.ok();
-    const authorizedFeedbackText = authorizedFeedback.text();
-    expect(authorizedFeedbackText).to.equal('Hello me, you are truely authorized.');
+    expect(authorizedFeedback.textContent).to.equal('testStatusTrue [ me]');
   });
   it('responds to login clicks by triggering the provided callback', () => {
     const TESTER = 'Tester';
@@ -52,7 +84,7 @@ describe('(Component) Login', () => {
     };
 
     const component = renderIntoDocument(
-      <Login onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} name='userName' />
+      <WrappedLogin store={store} onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} name='userName' />
     );
     const buttonList = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttonList).to.have.length(2);
@@ -81,7 +113,7 @@ describe('(Component) Login', () => {
     };
 
     const component = renderIntoDocument(
-      <Login onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name={TESTER} />
+      <WrappedLogin store={store} onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name={TESTER} />
     );
     const buttonList = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttonList).to.have.length(2);

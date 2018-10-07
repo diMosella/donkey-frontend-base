@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withLocalize } from 'react-localize-redux';
 
 class Login extends PureComponent {
   constructor (props) {
@@ -41,18 +42,18 @@ class Login extends PureComponent {
   }
 
   render () {
-    const { authorized, name } = this.props;
+    const { authorized, name, translate } = this.props;
     return <div>
-      <h1>Login page</h1>
-      <span>{`Hello${name ? ` ${name}` : ''}, you are ${authorized ? 'truely' : 'not'} authorized.`}</span>
+      <h1>{translate('main.login.title')}</h1>
+      <span>{translate(`main.login.status.${authorized ? 'true' : 'false'}`, { name: name ? ` ${name}` : '' })}</span>
       <form onSubmit={this.handleSubmit}>
         <input name='userName' ref={this.registerElement} disabled={authorized} />
         <button type='submit' disabled={authorized}>
-          Login
+          {translate('main.login.actions.enter')}
         </button>
       </form>
       <button onClick={this.handleClick} disabled={!authorized}>
-        Logout
+        {translate('main.login.actions.exit')}
       </button>
     </div>;
   }
@@ -65,7 +66,8 @@ Login.propTypes = {
   name: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func
-  })
+  }),
+  translate: PropTypes.func
 };
 
-export default Login;
+export default withLocalize(Login);

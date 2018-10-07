@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withLocalize } from 'react-localize-redux';
 
 class AddTodo extends PureComponent {
   constructor (props) {
@@ -31,17 +32,19 @@ class AddTodo extends PureComponent {
   }
 
   render () {
+    const { translate } = this.props;
     return <form onSubmit={this.handleSubmit}>
       <input name='todoText' ref={this.registerElement} />
       <button type='submit'>
-        Add Todo
+        {translate('heading.actions.add')}
       </button>
     </form>;
   }
 }
 
 AddTodo.propTypes = {
-  onTodoTextSubmit: PropTypes.func.isRequired
+  onTodoTextSubmit: PropTypes.func.isRequired,
+  translate: PropTypes.func
 };
 
-export default AddTodo;
+export default withLocalize(AddTodo);

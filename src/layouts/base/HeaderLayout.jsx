@@ -30,10 +30,10 @@ class HeaderLayout extends PureComponent {
         </div>
         <div>
           <nav>
-            <NavLink to={match.path} exact activeClassName='active'>Home</NavLink>
-            <NavLink to={`${match.path}auth`} activeClassName='active'>Login</NavLink>
-            <NavLink to={`${match.path}todos`} exact activeClassName='active'>Todos</NavLink>
-            <NavLink to={`${match.path}todos/completed`} activeClassName='active'>Completed</NavLink>
+            <NavLink to={match.path} exact activeClassName='active'>{translate('heading.nav.landing')}</NavLink>
+            <NavLink to={`${match.path}auth`} activeClassName='active'>{translate('heading.nav.enter')}</NavLink>
+            <NavLink to={`${match.path}todos`} exact activeClassName='active'>{translate('heading.nav.list')}</NavLink>
+            <NavLink to={`${match.path}todos/completed`} activeClassName='active'>{translate('heading.nav.ready')}</NavLink>
           </nav>
         </div>
       </div>

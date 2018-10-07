@@ -1,8 +1,70 @@
 {
   "heading": {
     "appTitle": [
-      "Simpel activiteitenlijstje",
+      "Simpel takenlijstje",
       "Simple Todos"
-    ]
+    ],
+    "nav": {
+      "landing": [
+        "Home",
+        "Home"
+      ],
+      "enter": [
+        "Log in",
+        "Login"
+      ],
+      "list": [
+        "Taken",
+        "Todos"
+      ],
+      "ready": [
+        "Gedaan",
+        "Completed"
+      ]
+    },
+    "actions": {
+      "add": [
+        "Nieuwe taak",
+        "Add todo"
+      ]
+    }
+  },
+  "main": {
+    "welcome": {
+      "title": [
+        "Welkom bij een simpel takenlijst",
+        "Welcome to Simple Todos"
+      ],
+      "text": [
+        "De bedoeling van deze applicatie is om als showcase en implementatie voorbeeld te dienen van de verschillende, gecombineerde technieken (React, Redux, Routes, Layouts, Multilingual, enz.).",
+        "This application is intended to represent a showcase and implementation example of the various combined technologies (React, Redux, Routes, Layouts, Multilingual, etc.)."
+      ]
+    },
+    "login": {
+      "title": [
+        "Inlog pagina",
+        "Login page"
+      ],
+      "status": {
+        "true": [
+          "Hallo${name}, je bent werkelijk geautoriseerd.",
+          "Hello${name}, you are truely authorized."
+        ],
+        "false": [
+          "Hallo${name}, je bent niet geautoriseerd.",
+          "Hello${name}, you are not authorized."
+        ]
+      },
+      "actions": {
+        "enter": [
+          "Log in",
+          "Login"
+        ],
+        "exit": [
+          "Log uit",
+          "Logout"
+        ]
+      }
+    }
   }
 }
