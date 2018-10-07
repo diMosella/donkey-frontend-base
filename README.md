@@ -37,13 +37,12 @@ Try to maintain the following commit message format:
 
 ### For Visual Studio Code:
 
-  1. Preferred packages:
-    1. Debugger for Chrome
-    1. EditorConfig for VS Code
-    1. ESLint
-    1. stylelint
-    1. (Sublime Text Keymap)
-    1. (Theme - Oceanic Next)
+* Preferred packages:
+
+  1. Debugger for Chrome
+  1. EditorConfig for VS Code
+  1. ESLint
+  1. stylelint
 
 ### Clone the project:
 
