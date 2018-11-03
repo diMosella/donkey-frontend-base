@@ -24,16 +24,6 @@ module.exports = (docRoot, urlPath, host, port) => ({
     rules: [
       {
         test: /\.s?css$/,
-        /* use: ExtractTextPlugin.extract({
-          fallback: [
-            'style-loader',
-            'css-loader'
-          ],
-          use: [
-            'postcss-loader',
-            'sass-loader'
-          ]
-        }) */
         use: [
           'style-loader',
           'css-loader',

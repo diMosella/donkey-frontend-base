@@ -2,7 +2,13 @@
   "name": "donkey-frontend-base",
   "version": "0.1.0",
   "description": "A base module for frontend (web-)development",
-  "main": "index.jsx",
+  "main": "donkey.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "bin": {
+    "donkey": "./bin/donkey.js"
+  },
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack --mode production",

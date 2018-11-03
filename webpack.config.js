@@ -15,6 +15,10 @@ const PATH_PUBLIC = '/';
 const PATH_START = path.join(PATH_SRC, 'index.jsx');
 const FILE_INDEX = 'index.html';
 const FILE_INDEX_TEMPLATE = 'index.template.ejs';
+const DEFAULT_PROJECT_CONFIG = {
+  title: 'Donkey Front-end Base module',
+  favicon: path.join(PATH_SRC, 'favicon.ico')
+};
 
 process.traceDeprecation = true;
 
@@ -86,25 +90,36 @@ const BASE_CONFIG = {
   },
   plugins: [
     new CleanWebpackPlugin([PATH_DIST]),
+    new webpack.NamedModulesPlugin()
+  ]
+};
 
+module.exports = (env, argv) => {
+  let projectOverrides = {};
+  if (typeof argv.projectConfig === 'string') {
+    try {
+      projectOverrides = require(argv.projectConfig);
+    } catch (exception) {
+      console.warn(`Couldn't load project config, specified by ${argv.projectConfig}:`, exception);
+      projectOverrides = {};
+    }
+  }
+  const projectConfig = { ...DEFAULT_PROJECT_CONFIG, ...projectOverrides };
+  const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
+  BASE_CONFIG.plugins.push(
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
       template: path.join(PATH_SRC, FILE_INDEX_TEMPLATE),
-      title: 'Donkey Front-end Base module',
+      title: projectConfig.title,
       hash: false,
-      favicon: path.join(PATH_SRC, 'favicon.ico'),
+      favicon: projectConfig.favicon,
       filename: FILE_INDEX,
       inject: 'head',
       xhtml: true,
       minify: {
         collapseWhitespace: true
       }
-    }),
-    new webpack.NamedModulesPlugin()
-  ]
-};
-
-module.exports = (env, argv) => {
-  const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
+    })
+  );
   return merge(BASE_CONFIG, isProd ? prodOverrides : devOverrides(PATH_DIST, PATH_PUBLIC, SERVER_HOST, SERVER_PORT));
 };
