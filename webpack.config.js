@@ -17,7 +17,8 @@ const FILE_INDEX = 'index.html';
 const FILE_INDEX_TEMPLATE = 'index.template.ejs';
 const DEFAULT_PROJECT_CONFIG = {
   title: 'Donkey Front-end Base module',
-  favicon: path.join(PATH_SRC, 'favicon.ico')
+  favicon: path.join(PATH_SRC, 'favicon.ico'),
+  mainComponent: '../layouts/base/BaseLayout'
 };
 
 process.traceDeprecation = true;
@@ -85,6 +86,7 @@ const BASE_CONFIG = {
   },
   output: {
     filename: `[name].js`,
+    chunkFilename: '[name].bundle.js',
     path: PATH_DIST,
     publicPath: PATH_PUBLIC
   },
@@ -94,18 +96,25 @@ const BASE_CONFIG = {
   ]
 };
 
-module.exports = (env, argv) => {
+const enhanceByProjectConfig = (projectPath, projectConfigPath) => {
   let projectOverrides = {};
-  if (typeof argv.projectConfig === 'string') {
+  if (typeof projectConfigPath === 'string') {
     try {
-      projectOverrides = require(argv.projectConfig);
+      // TODO: add schema validation for configuration
+      projectOverrides = require(path.join(projectPath || '', projectConfigPath));
     } catch (exception) {
-      console.warn(`Couldn't load project config, specified by ${argv.projectConfig}:`, exception);
+      console.warn(
+        `[ Donkey ]: couldn't load project config overrides`,
+        `specified by ${projectConfigPath} on path ${projectPath}:`,
+        exception
+      );
       projectOverrides = {};
     }
   }
   const projectConfig = { ...DEFAULT_PROJECT_CONFIG, ...projectOverrides };
-  const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
+  console.log(projectConfig.mainComponent, projectOverrides.mainComponent);
+  const isCustomProject = typeof projectConfig.mainComponent === 'string' &&
+      projectOverrides.mainComponent === projectConfig.mainComponent;
   BASE_CONFIG.plugins.push(
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
@@ -121,5 +130,19 @@ module.exports = (env, argv) => {
       }
     })
   );
+  BASE_CONFIG.plugins.push(
+    new webpack.DefinePlugin({
+      '__PROJECT_FEATURE__': JSON.stringify(isCustomProject),
+      '__PROJECT_MAIN_COMPONENT__': JSON.stringify(path.join((projectPath || ''), projectConfig.mainComponent))
+    })
+  );
+};
+
+module.exports = (env, argv) => {
+  enhanceByProjectConfig(
+    typeof argv.projectPath === 'string' ? argv.projectPath : null,
+    typeof argv.projectConfig === 'string' ? argv.projectConfig : null
+  );
+  const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
   return merge(BASE_CONFIG, isProd ? prodOverrides : devOverrides(PATH_DIST, PATH_PUBLIC, SERVER_HOST, SERVER_PORT));
 };

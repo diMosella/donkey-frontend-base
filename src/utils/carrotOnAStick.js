@@ -4,7 +4,8 @@ const childProcess = require('child_process');
 const path = require('path');
 
 exports.start = (config) => {
-  const configPath = path.join(process.cwd(), config);
+  const projectPath = path.join(process.cwd());
+  const configPath = path.join(config);
   const baseModulePath = path.join(__dirname, '../../');
   const serverCommandPath = path.join(baseModulePath, 'node_modules/.bin/webpack-dev-server');
   process.chdir(baseModulePath);
@@ -17,7 +18,7 @@ exports.start = (config) => {
   const runCommand = (commandPath, callback) => {
     // keep track of whether callback has been invoked to prevent multiple invocations
     let invoked = false;
-    const process = childProcess.fork(`${commandPath}`, ['--projectConfig', configPath]);
+    const process = childProcess.fork(`${commandPath}`, ['--projectConfig', configPath, '--projectPath', projectPath]);
 
     // errors might prevent triggering the exit event
     process.on('error', (error) => {

@@ -15,7 +15,9 @@
     "mocha"   : true
   },
   "globals": {
-    "__DEV__"      : false
+    "__DEV__"                     : false,
+    "__PROJECT_FEATURE__"         : false,
+    "__PROJECT_MAIN_COMPONENT__"  : false
   },
   "rules": {
     "semi"                 : [1, "always"],
