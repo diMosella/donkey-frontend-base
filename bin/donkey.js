@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use-strict';
 
-const carrotOnAStick = require('../src/utils/carrotOnAStick.js');
+const carrotOnAStick = require('./carrotOnAStick.js');
 
 const ACTIONS = {
   START: 'start',

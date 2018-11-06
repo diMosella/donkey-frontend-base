@@ -18,7 +18,7 @@ const FILE_INDEX_TEMPLATE = 'index.template.ejs';
 const DEFAULT_PROJECT_CONFIG = {
   title: 'Donkey Front-end Base module',
   favicon: path.join(PATH_SRC, 'favicon.ico'),
-  mainComponent: '../layouts/base/BaseLayout'
+  mainSourcePath: 'src/'
 };
 
 process.traceDeprecation = true;
@@ -112,9 +112,10 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath) => {
     }
   }
   const projectConfig = { ...DEFAULT_PROJECT_CONFIG, ...projectOverrides };
-  console.log(projectConfig.mainComponent, projectOverrides.mainComponent);
   const isCustomProject = typeof projectConfig.mainComponent === 'string' &&
       projectOverrides.mainComponent === projectConfig.mainComponent;
+
+  BASE_CONFIG.resolve.symlinks = false;
   BASE_CONFIG.plugins.push(
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
@@ -133,7 +134,7 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath) => {
   BASE_CONFIG.plugins.push(
     new webpack.DefinePlugin({
       '__PROJECT_FEATURE__': JSON.stringify(isCustomProject),
-      '__PROJECT_MAIN_COMPONENT__': JSON.stringify(path.join((projectPath || ''), projectConfig.mainComponent))
+      '__PROJECT_MAIN_COMPONENT__': JSON.stringify(projectConfig.mainComponent)
     })
   );
 };

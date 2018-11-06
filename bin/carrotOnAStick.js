@@ -2,12 +2,27 @@
 
 const childProcess = require('child_process');
 const path = require('path');
+const fs = require('fs');
+const SRC = './src';
+const PROJECT = 'project';
 
-exports.start = (config) => {
+exports.start = (configPath) => {
   const projectPath = path.join(process.cwd());
-  const configPath = path.join(config);
-  const baseModulePath = path.join(__dirname, '../../');
+  const baseModulePath = path.join(__dirname, '../');
   const serverCommandPath = path.join(baseModulePath, 'node_modules/.bin/webpack-dev-server');
+
+  const localProjectPath = path.join(baseModulePath, SRC, PROJECT);
+  const projectExists = fs.existsSync(localProjectPath);
+  if (projectExists) {
+    const projectPathStat = fs.lstatSync(localProjectPath);
+    console.warn(`[ Donkey ]: the directory '${path.join(SRC, PROJECT)}' already exists` +
+      `${projectPathStat.isSymbolicLink()
+        ? ' (and is a symbolic link)'
+        : ''}; it wil be replaced...`);
+    fs.unlinkSync(localProjectPath);
+  }
+  process.chdir(path.join(baseModulePath, SRC));
+  fs.symlinkSync(path.join(projectPath, SRC), PROJECT);
   process.chdir(baseModulePath);
 
   /**
