@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 'use-strict';
 
+const donkeyLog = require('./donkey-log');
 const carrotOnAStick = require('./carrotOnAStick.js');
 
 const ACTIONS = {
   START: 'start',
+  BUILD: 'build',
   TEST: 'test'
 };
 const OPTIONS = {
@@ -33,12 +35,16 @@ const parseArguments = () => {
 
 const parameters = parseArguments();
 
-console.log('[ Donkey ]: received parameters', parameters);
+donkeyLog.info(`retrieved [${parameters.action.toUpperCase()}] context`,
+  `using [${parameters.config}] for configuration`);
 
 switch (parameters.action) {
   case ACTIONS.START:
     carrotOnAStick.start(parameters.config);
     break;
+  case ACTIONS.TEST:
+    carrotOnAStick.test(parameters.config);
+    break;
   default:
-    console.warn('[ Donkey ]: the requested action was not recognized');
+    donkeyLog.error('the requested action was not recognized');
 }
