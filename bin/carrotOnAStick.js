@@ -14,7 +14,7 @@ const OPTIONS = {
 };
 const COMMAND_PATHS = {
   DEV_SERVER: 'node_modules/.bin/webpack-dev-server',
-  TEST_RUNNER: ''
+  TEST_RUNNER: 'node_modules/.bin/mocha'
 };
 
 /**
@@ -101,4 +101,18 @@ exports.start = (configPath) => {
 
 exports.test = (configPath) => {
   donkeyLog.info('about to go testing');
+  const projectPath = path.join(process.cwd());
+  const baseModulePath = path.join(__dirname, UP);
+  const testCommandPath = path.join(baseModulePath, COMMAND_PATHS.TEST_RUNNER);
+
+  syncProjectSourcePath(baseModulePath, projectPath);
+  process.chdir(baseModulePath);
+  process.env.NODE_ENV = 'test';
+  runCommand(testCommandPath, [OPTIONS.CONFIG, configPath, OPTIONS.PATH, projectPath], (error) => {
+    if (error) {
+      donkeyLog.error(error.message);
+      throw error;
+    }
+    donkeyLog.info('finished running the test command');
+  });
 };

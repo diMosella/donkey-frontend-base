@@ -1,6 +1,6 @@
 {
   "name": "donkey-frontend-base",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A base module for frontend (web-)development",
   "main": "donkey.js",
   "engines": {
