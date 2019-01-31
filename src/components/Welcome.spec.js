@@ -1,6 +1,6 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { renderIntoDocument, findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
 import Welcome from './Welcome';
 const expect = global.chai.expect;
@@ -34,7 +34,9 @@ describe('(Component) Welcome', () => {
   });
   it('renders a page', () => {
     const component = renderIntoDocument(
-      <WrappedWelcome store={store} />
+      <Provider store={store}>
+        <WrappedWelcome />
+      </Provider>
     );
 
     const page = findRenderedDOMComponentWithClass(component, 'page');

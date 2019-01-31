@@ -1,6 +1,6 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { renderIntoDocument, findRenderedDOMComponentWithTag,
   scryRenderedDOMComponentsWithTag, Simulate } from 'react-dom/test-utils';
 import Login from './Login';
@@ -43,7 +43,9 @@ describe('(Component) Login', () => {
     };
 
     const component = renderIntoDocument(
-      <WrappedLogin store={store} onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name='me' />
+      <Provider store={store}>
+        <WrappedLogin onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name='me' />
+      </Provider>
     );
 
     const login = findRenderedDOMComponentWithTag(component, 'div');
@@ -56,7 +58,9 @@ describe('(Component) Login', () => {
     let onClick = (param) => null;
 
     const component = renderIntoDocument(
-      <WrappedLogin store={store} onClick={onClick} active />
+      <Provider store={store}>
+        <WrappedLogin onClick={onClick} active />
+      </Provider>
     );
 
     const unAuthorizedFeedback = findRenderedDOMComponentWithTag(component, 'span');
@@ -67,7 +71,9 @@ describe('(Component) Login', () => {
     let onClick = (param) => null;
 
     const component = renderIntoDocument(
-      <WrappedLogin store={store} onClick={onClick} active authorized name='me' />
+      <Provider store={store}>
+        <WrappedLogin onClick={onClick} active authorized name='me' />
+      </Provider>
     );
     const authorizedFeedback = findRenderedDOMComponentWithTag(component, 'span');
     expect(authorizedFeedback).to.be.ok();
@@ -84,7 +90,9 @@ describe('(Component) Login', () => {
     };
 
     const component = renderIntoDocument(
-      <WrappedLogin store={store} onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} name='userName' />
+      <Provider store={store}>
+        <WrappedLogin onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} name='userName' />
+      </Provider>
     );
     const buttonList = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttonList).to.have.length(2);
@@ -113,7 +121,9 @@ describe('(Component) Login', () => {
     };
 
     const component = renderIntoDocument(
-      <WrappedLogin store={store} onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name={TESTER} />
+      <Provider store={store}>
+        <WrappedLogin onUserNameSubmit={onUserNameSubmit} logOut={logOut} history={history} authorized name={TESTER} />
+      </Provider>
     );
     const buttonList = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttonList).to.have.length(2);
