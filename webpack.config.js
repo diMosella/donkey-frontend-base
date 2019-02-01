@@ -96,7 +96,7 @@ const BASE_CONFIG = {
   ]
 };
 
-const enhanceByProjectConfig = (projectPath, projectConfigPath) => {
+const enhanceByProjectConfig = (projectPath, projectConfigPath, projectModulesPath) => {
   let projectOverrides = {};
   if (typeof projectConfigPath === 'string') {
     try {
@@ -116,6 +116,9 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath) => {
       projectOverrides.mainComponent === projectConfig.mainComponent;
 
   BASE_CONFIG.resolve.symlinks = false;
+  if (typeof projectModulesPath === 'string') {
+    BASE_CONFIG.resolve.modules = [projectModulesPath, 'node_modules'];
+  }
   BASE_CONFIG.plugins.push(
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
@@ -142,7 +145,8 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath) => {
 module.exports = (env, argv) => {
   enhanceByProjectConfig(
     typeof argv.projectPath === 'string' ? argv.projectPath : null,
-    typeof argv.projectConfig === 'string' ? argv.projectConfig : null
+    typeof argv.projectConfig === 'string' ? argv.projectConfig : null,
+    typeof argv.projectModules === 'string' ? argv.projectModules : null
   );
   const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
   return merge(BASE_CONFIG, isProd ? prodOverrides : devOverrides(PATH_DIST, PATH_PUBLIC, SERVER_HOST, SERVER_PORT));

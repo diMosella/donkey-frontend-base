@@ -6,15 +6,19 @@ const fs = require('fs');
 const donkeyLog = require('./donkey-log');
 
 const SRC = 'src';
+const TEST = 'test';
+const MODULES = 'node_modules';
 const PROJECT = 'project';
 const UP = '../';
 const OPTIONS = {
   CONFIG: '--projectConfig',
-  PATH: '--projectPath'
+  PATH: '--projectPath',
+  MODULES: '--projectModules',
+  TEST_CONFIG: '--opts'
 };
 const COMMAND_PATHS = {
-  DEV_SERVER: 'node_modules/.bin/webpack-dev-server',
-  TEST_RUNNER: 'node_modules/.bin/mocha'
+  DEV_SERVER: `${MODULES}/.bin/webpack-dev-server`,
+  TEST_RUNNER: `${MODULES}/.bin/mocha`
 };
 
 /**
@@ -86,17 +90,21 @@ exports.start = (configPath) => {
   const projectPath = path.join(process.cwd());
   const baseModulePath = path.join(__dirname, UP);
   const serverCommandPath = path.join(baseModulePath, COMMAND_PATHS.DEV_SERVER);
+  const projectModulesPath = path.join(projectPath, MODULES);
 
   syncProjectSourcePath(baseModulePath, projectPath);
   process.chdir(baseModulePath);
 
-  runCommand(serverCommandPath, [OPTIONS.CONFIG, configPath, OPTIONS.PATH, projectPath], (error) => {
-    if (error) {
-      donkeyLog.error(error.message);
-      throw error;
+  runCommand(serverCommandPath,
+    [OPTIONS.CONFIG, configPath, OPTIONS.PATH, projectPath, OPTIONS.MODULES, projectModulesPath],
+    (error) => {
+      if (error) {
+        donkeyLog.error(error.message);
+        throw error;
+      }
+      donkeyLog.info('finished running the server command');
     }
-    donkeyLog.info('finished running the server command');
-  });
+  );
 };
 
 exports.test = (configPath) => {
@@ -107,11 +115,13 @@ exports.test = (configPath) => {
 
   syncProjectSourcePath(baseModulePath, projectPath);
   process.chdir(baseModulePath);
-  process.env.NODE_ENV = 'test';
-  runCommand(testCommandPath, [OPTIONS.CONFIG, configPath, OPTIONS.PATH, projectPath], (error) => {
+  process.env.NODE_ENV = TEST;
+  process.env.NODE_PATH = `${process.env.NODE_PATH}:projectPath/node_modules`;
+  const projectTestPath = path.join(baseModulePath, TEST, PROJECT, 'mocha.opts');
+  console.log(projectTestPath);
+  runCommand(testCommandPath, [OPTIONS.TEST_CONFIG, projectTestPath], (error) => {
     if (error) {
       donkeyLog.error(error.message);
-      throw error;
     }
     donkeyLog.info('finished running the test command');
   });
