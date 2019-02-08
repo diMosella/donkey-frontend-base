@@ -10,11 +10,10 @@ const TEST = 'test';
 const MODULES = 'node_modules';
 const PROJECT = 'project';
 const UP = '../';
-const OPTIONS = {
+const ARG_LABELS = {
   CONFIG: '--projectConfig',
   PATH: '--projectPath',
-  MODULES: '--projectModules',
-  TEST_CONFIG: '--opts'
+  MODULES: '--projectModules'
 };
 const COMMAND_PATHS = {
   DEV_SERVER: `${MODULES}/.bin/webpack-dev-server`,
@@ -61,21 +60,22 @@ const syncProjectSourcePath = (baseModulePath, projectPath) => {
 /**
    * Command runner
    * @param {string} commandPath The command to execute
+   * @param {string[]} args The arguments to pass to the command
    * @param {func} callback The function to call when finished, to enable error reporting
    */
-const runCommand = (commandPath, options, callback) => {
+const runCommand = (commandPath, args, callback) => {
   // keep track of whether callback has been invoked to prevent multiple invocations
   let invoked = false;
-  const process = childProcess.fork(`${commandPath}`, options);
+  const forkedProcess = childProcess.fork(`${commandPath}`, args);
   // errors might prevent triggering the exit event
-  process.on('error', (error) => {
+  forkedProcess.on('error', (error) => {
     if (!invoked) {
       invoked = true;
       callback(error);
     }
   });
-  // execute the callback once the process has finished running
-  process.on('exit', (code) => {
+  // execute the callback once the forkedProcess has finished running
+  forkedProcess.on('exit', (code) => {
     if (!invoked) {
       invoked = true;
       const error = code !== 0
@@ -96,7 +96,7 @@ exports.start = (configPath) => {
   process.chdir(baseModulePath);
 
   runCommand(serverCommandPath,
-    [OPTIONS.CONFIG, configPath, OPTIONS.PATH, projectPath, OPTIONS.MODULES, projectModulesPath],
+    [ARG_LABELS.CONFIG, configPath, ARG_LABELS.PATH, projectPath, ARG_LABELS.MODULES, projectModulesPath],
     (error) => {
       if (error) {
         donkeyLog.error(error.message);
@@ -109,17 +109,14 @@ exports.start = (configPath) => {
 
 exports.test = (configPath) => {
   donkeyLog.info('about to go testing');
-  const projectPath = path.join(process.cwd());
   const baseModulePath = path.join(__dirname, UP);
   const testCommandPath = path.join(baseModulePath, COMMAND_PATHS.TEST_RUNNER);
+  const testConfigPath = path.join(baseModulePath, '.mocharc.js');
 
-  syncProjectSourcePath(baseModulePath, projectPath);
-  process.chdir(baseModulePath);
   process.env.NODE_ENV = TEST;
-  process.env.NODE_PATH = `${process.env.NODE_PATH}:projectPath/node_modules`;
-  const projectTestPath = path.join(baseModulePath, TEST, PROJECT, 'mocha.opts');
-  console.log(projectTestPath);
-  runCommand(testCommandPath, [OPTIONS.TEST_CONFIG, projectTestPath], (error) => {
+  process.env.NODE_PATH = `${process.env.NODE_PATH}:${path.join(baseModulePath, MODULES)}`;
+  process.env.DONKEY_PATH = baseModulePath;
+  runCommand(testCommandPath, [ '--config', testConfigPath ], (error) => {
     if (error) {
       donkeyLog.error(error.message);
     }

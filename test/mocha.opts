@@ -1,4 +1,0 @@
---require @babel/register
---require ignore-styles
---require test/testSetup.js
-src/**/*.spec.js
