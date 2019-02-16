@@ -11,10 +11,9 @@
   },
   "scripts": {
     "start": "node bin/donkey start",
-    "build": "webpack --mode production",
     "test": "node bin/donkey test",
-    "test:watch": "NODE_ENV=test mocha --watch --reporter min --watch-extensions jsx",
-    "test:cover": "node bin/donkey test:cover"
+    "test:cover": "node bin/donkey test:cover",
+    "build": "node bin/donkey build"
   },
   "repository": {
     "type": "git",
@@ -32,7 +31,7 @@
   },
   "homepage": "https://gitlab.com/diMosella/donkey-frontend-base#readme",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.3.3",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-proposal-function-bind": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
@@ -47,7 +46,6 @@
     "chai": "^4.2.0",
     "chai-dom": "^1.8.1",
     "clean-webpack-plugin": "^1.0.1",
-    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "dirty-chai": "^2.0.1",
     "enzyme": "^3.8.0",
@@ -70,7 +68,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "mocha": "^6.0.0-1",
     "node-sass": "^4.11.0",
-    "nyc": "^13.2.0",
+    "nyc": "^13.3.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "raf": "^3.4.1",

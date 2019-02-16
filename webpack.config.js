@@ -11,8 +11,9 @@ const donkeyLog = require('./bin/donkey-log');
 const devOverrides = require('./webpack.dev.js');
 const prodOverrides = require('./webpack.prod.js');
 
+const BUILD_FOLDER = 'build';
 const PATH_SRC = path.join(__dirname, 'src');
-const PATH_DIST = path.join(__dirname, 'dist');
+const PATH_BUILD = path.join(__dirname, BUILD_FOLDER);
 const PATH_PUBLIC = '/';
 const PATH_START = path.join(PATH_SRC, 'index.jsx');
 const FILE_INDEX = 'index.html';
@@ -32,7 +33,7 @@ process.traceDeprecation = true;
 const SERVER_HOST = 'localhost';
 const SERVER_PORT = process.env.PORT || 8080;
 
-const BASE_CONFIG = {
+const baseConfig = {
   entry: {
     app: [
       PATH_START
@@ -89,11 +90,11 @@ const BASE_CONFIG = {
   output: {
     filename: `[name].js`,
     chunkFilename: '[name].bundle.js',
-    path: PATH_DIST,
+    path: PATH_BUILD,
     publicPath: PATH_PUBLIC
   },
   plugins: [
-    new CleanWebpackPlugin([PATH_DIST]),
+    new CleanWebpackPlugin([PATH_BUILD]),
     new webpack.NamedModulesPlugin()
   ]
 };
@@ -116,11 +117,16 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath, projectModulesPa
   const isCustomProject = typeof projectConfig.mainComponent === 'string' &&
       projectOverrides.mainComponent === projectConfig.mainComponent;
 
-  BASE_CONFIG.resolve.symlinks = false;
-  if (typeof projectModulesPath === 'string') {
-    BASE_CONFIG.resolve.modules = [projectModulesPath, 'node_modules'];
+  if (typeof projectPath === 'string') {
+    const projectBuildPath = path.join(projectPath, BUILD_FOLDER);
+    baseConfig.output.path = projectBuildPath;
+    baseConfig.plugins[0] = new CleanWebpackPlugin([projectBuildPath], { root: projectPath });
   }
-  BASE_CONFIG.plugins.push(
+  baseConfig.resolve.symlinks = false;
+  if (typeof projectModulesPath === 'string') {
+    baseConfig.resolve.modules = [projectModulesPath, 'node_modules'];
+  }
+  baseConfig.plugins.push(
     /* creates a html-file in the dist folder */
     new HtmlWebpackPlugin({
       template: path.join(PATH_SRC, FILE_INDEX_TEMPLATE),
@@ -135,7 +141,7 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath, projectModulesPa
       }
     })
   );
-  BASE_CONFIG.plugins.push(
+  baseConfig.plugins.push(
     new webpack.DefinePlugin({
       '__PROJECT_FEATURE__': JSON.stringify(isCustomProject),
       '__PROJECT_MAIN_COMPONENT__': JSON.stringify(projectConfig.mainComponent)
@@ -150,5 +156,8 @@ module.exports = (env, argv) => {
     typeof argv.projectModules === 'string' ? argv.projectModules : null
   );
   const isProd = (argv && argv.mode && typeof argv.mode === 'string' && argv.mode.toLowerCase() === 'production');
-  return merge(BASE_CONFIG, isProd ? prodOverrides : devOverrides(PATH_DIST, PATH_PUBLIC, SERVER_HOST, SERVER_PORT));
+  return merge(baseConfig, isProd
+    ? prodOverrides
+    : devOverrides(baseConfig.output.path, PATH_PUBLIC, SERVER_HOST, SERVER_PORT)
+  );
 };

@@ -49,6 +49,9 @@ switch (parameters.action) {
   case ACTIONS.TEST_COVERAGE:
     carrotOnAStick.testWithCoverage();
     break;
+  case ACTIONS.BUILD:
+    carrotOnAStick.build(parameters.config);
+    break;
   default:
     donkeyLog.error('the requested action was not recognized');
 }

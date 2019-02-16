@@ -14,12 +14,32 @@ const IDEM = './';
 const ARG_LABELS = {
   CONFIG: '--projectConfig',
   PATH: '--projectPath',
-  MODULES: '--projectModules'
+  MODULES: '--projectModules',
+  MOCHA: {
+    CONFIG: '--config',
+    WATCH: '--watch',
+    REPORTER: '--reporter',
+    EXTENSIONS: '--watch-extensions'
+  },
+  WEBPACK: {
+    MODE: '--mode'
+  }
+};
+const ARG_VALUES = {
+  MOCHA: {
+    CONFIG: '.mocharc.js',
+    REPORTER: 'min',
+    EXTENSIONS: 'jsx'
+  },
+  WEBPACK: {
+    MODE: 'production'
+  }
 };
 const COMMAND_PATHS = {
   DEV_SERVER: `${MODULES}/.bin/webpack-dev-server`,
   TEST_RUNNER: `${MODULES}/.bin/mocha`,
-  COVERAGE_RUNNER: `${MODULES}/.bin/nyc`
+  COVERAGE_RUNNER: `${MODULES}/.bin/nyc`,
+  BUILD: `${MODULES}/.bin/webpack`
 };
 
 /**
@@ -29,11 +49,6 @@ const COMMAND_PATHS = {
  * @param {string} projectPath The root path of the project
  */
 const syncProjectSourcePath = (baseModulePath, projectPath) => {
-  if (baseModulePath === projectPath) {
-    donkeyLog.info(`the locations are the same`);
-    return;
-  }
-
   const localProjectPath = path.join(baseModulePath, SRC, PROJECT);
   let isLinkToProjectSrc = false;
   const projectExists = fs.existsSync(localProjectPath) === true;
@@ -44,11 +59,17 @@ const syncProjectSourcePath = (baseModulePath, projectPath) => {
       if (typeof realProjectPath === 'string' && realProjectPath === path.join(projectPath, SRC)) {
         isLinkToProjectSrc = true;
       }
+      if (baseModulePath === projectPath) {
+        donkeyLog.info(`the locations are the same`,
+          `in that case the project source is already included. Therefore the symbolic link will be removed...`);
+        fs.unlinkSync(localProjectPath);
+        return;
+      }
     }
   }
 
   if (projectExists && !isLinkToProjectSrc) {
-    donkeyLog.warning(`the directory [${path.join(SRC, PROJECT)}] already exists`,
+    donkeyLog.warning(`the location [${path.join(SRC, PROJECT)}] already exists`,
       `in that case it should point to the project source, but it doesn't. Therefore it wil be replaced...`);
     fs.unlinkSync(localProjectPath);
   }
@@ -106,27 +127,25 @@ exports.start = (configPath) => {
     commandArgs.unshift(ARG_LABELS.CONFIG, configPath);
   }
 
-  runCommand(serverCommandPath,
-    commandArgs,
-    (error) => {
-      if (error) {
-        donkeyLog.error(error.message);
-        throw error;
-      }
-      donkeyLog.info('finished running the server command');
+  runCommand(serverCommandPath, commandArgs, (error) => {
+    if (error) {
+      donkeyLog.error(error.message);
+      throw error;
     }
-  );
+    donkeyLog.info('finished running the server command');
+  });
 };
 
 exports.test = () => {
   const baseModulePath = path.join(__dirname, UP);
   const testCommandPath = path.join(baseModulePath, COMMAND_PATHS.TEST_RUNNER);
-  const testConfigPath = path.join(baseModulePath, '.mocharc.js');
+  const testConfigPath = path.join(baseModulePath, ARG_VALUES.MOCHA.CONFIG);
 
   process.env.NODE_ENV = TEST;
   process.env.NODE_PATH = `${process.env.NODE_PATH}:${path.join(baseModulePath, MODULES)}`;
   process.env.DONKEY_PATH = baseModulePath;
-  runCommand(testCommandPath, [ '--config', testConfigPath ], (error) => {
+  const commandArgs = [ ARG_LABELS.MOCHA.CONFIG, testConfigPath ];
+  runCommand(testCommandPath, commandArgs, (error) => {
     if (error) {
       donkeyLog.error(error.message);
     }
@@ -135,19 +154,41 @@ exports.test = () => {
 };
 
 exports.testWithCoverage = () => {
-  donkeyLog.info('requested running the test with coverage command');
   const baseModulePath = path.join(__dirname, UP);
   const coverageCommandPath = path.join(baseModulePath, COMMAND_PATHS.COVERAGE_RUNNER);
   const testCommandPath = path.join(baseModulePath, COMMAND_PATHS.TEST_RUNNER);
-  const testConfigPath = path.join(baseModulePath, '.mocharc.js');
+  const testConfigPath = path.join(baseModulePath, ARG_VALUES.MOCHA.CONFIG);
 
   process.env.NODE_ENV = TEST;
   process.env.NODE_PATH = `${process.env.NODE_PATH}:${path.join(baseModulePath, MODULES)}`;
   process.env.DONKEY_PATH = baseModulePath;
-  runCommand(coverageCommandPath, [ testCommandPath, '--config', testConfigPath ], (error) => {
+  runCommand(coverageCommandPath, [ testCommandPath, ARG_LABELS.MOCHA.CONFIG, testConfigPath ], (error) => {
     if (error) {
       donkeyLog.error(error.message);
     }
     donkeyLog.info('finished running the test with coverage command');
+  });
+};
+
+exports.build = (configPath) => {
+  const projectPath = path.join(process.cwd(), IDEM);
+  const baseModulePath = path.join(__dirname, UP);
+  const buildCommandPath = path.join(baseModulePath, COMMAND_PATHS.BUILD);
+  const projectModulesPath = path.join(projectPath, MODULES);
+
+  syncProjectSourcePath(baseModulePath, projectPath);
+  process.chdir(baseModulePath);
+  const commandArgs = [ARG_LABELS.PATH, projectPath, ARG_LABELS.MODULES, projectModulesPath,
+    ARG_LABELS.WEBPACK.MODE, ARG_VALUES.WEBPACK.MODE];
+  if (typeof configPath === 'string') {
+    commandArgs.unshift(ARG_LABELS.CONFIG, configPath);
+  }
+
+  runCommand(buildCommandPath, commandArgs, (error) => {
+    if (error) {
+      donkeyLog.error(error.message);
+      throw error;
+    }
+    donkeyLog.info('finished running the build command');
   });
 };
