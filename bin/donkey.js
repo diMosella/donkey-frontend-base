@@ -37,7 +37,7 @@ const parseArguments = () => {
 const parameters = parseArguments();
 
 donkeyLog.info(`retrieved [${parameters.action.toUpperCase()}] context`,
-  `using [${parameters.config}] for configuration`);
+  `${parameters.config ? `using [${parameters.config}] for` : `without specific`} configuration`);
 
 switch (parameters.action) {
   case ACTIONS.START:
