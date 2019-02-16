@@ -10,11 +10,11 @@
     "donkey": "./bin/donkey.js"
   },
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "node bin/donkey start",
     "build": "webpack --mode production",
-    "test": "NODE_ENV=test mocha",
+    "test": "node bin/donkey test",
     "test:watch": "NODE_ENV=test mocha --watch --reporter min --watch-extensions jsx",
-    "test:cover": "cross-env NODE_ENV=test nyc _mocha"
+    "test:cover": "node bin/donkey test:cover"
   },
   "repository": {
     "type": "git",

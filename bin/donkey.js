@@ -7,7 +7,8 @@ const carrotOnAStick = require('./carrotOnAStick.js');
 const ACTIONS = {
   START: 'start',
   BUILD: 'build',
-  TEST: 'test'
+  TEST: 'test',
+  TEST_COVERAGE: 'test:cover'
 };
 const OPTIONS = {
   CONFIG: '--config'
@@ -43,7 +44,10 @@ switch (parameters.action) {
     carrotOnAStick.start(parameters.config);
     break;
   case ACTIONS.TEST:
-    carrotOnAStick.test(parameters.config);
+    carrotOnAStick.test();
+    break;
+  case ACTIONS.TEST_COVERAGE:
+    carrotOnAStick.testWithCoverage();
     break;
   default:
     donkeyLog.error('the requested action was not recognized');

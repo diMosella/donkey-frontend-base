@@ -10,6 +10,7 @@ const TEST = 'test';
 const MODULES = 'node_modules';
 const PROJECT = 'project';
 const UP = '../';
+const IDEM = './';
 const ARG_LABELS = {
   CONFIG: '--projectConfig',
   PATH: '--projectPath',
@@ -17,7 +18,8 @@ const ARG_LABELS = {
 };
 const COMMAND_PATHS = {
   DEV_SERVER: `${MODULES}/.bin/webpack-dev-server`,
-  TEST_RUNNER: `${MODULES}/.bin/mocha`
+  TEST_RUNNER: `${MODULES}/.bin/mocha`,
+  COVERAGE_RUNNER: `${MODULES}/.bin/nyc`
 };
 
 /**
@@ -27,6 +29,11 @@ const COMMAND_PATHS = {
  * @param {string} projectPath The root path of the project
  */
 const syncProjectSourcePath = (baseModulePath, projectPath) => {
+  if (baseModulePath === projectPath) {
+    donkeyLog.info(`the locations are the same`);
+    return;
+  }
+
   const localProjectPath = path.join(baseModulePath, SRC, PROJECT);
   let isLinkToProjectSrc = false;
   const projectExists = fs.existsSync(localProjectPath) === true;
@@ -87,16 +94,20 @@ const runCommand = (commandPath, args, callback) => {
 };
 
 exports.start = (configPath) => {
-  const projectPath = path.join(process.cwd());
+  const projectPath = path.join(process.cwd(), IDEM);
   const baseModulePath = path.join(__dirname, UP);
   const serverCommandPath = path.join(baseModulePath, COMMAND_PATHS.DEV_SERVER);
   const projectModulesPath = path.join(projectPath, MODULES);
 
   syncProjectSourcePath(baseModulePath, projectPath);
   process.chdir(baseModulePath);
+  const commandArgs = [ARG_LABELS.PATH, projectPath, ARG_LABELS.MODULES, projectModulesPath];
+  if (typeof configPath === 'string') {
+    commandArgs.unshift(ARG_LABELS.CONFIG, configPath);
+  }
 
   runCommand(serverCommandPath,
-    [ARG_LABELS.CONFIG, configPath, ARG_LABELS.PATH, projectPath, ARG_LABELS.MODULES, projectModulesPath],
+    commandArgs,
     (error) => {
       if (error) {
         donkeyLog.error(error.message);
@@ -107,8 +118,7 @@ exports.start = (configPath) => {
   );
 };
 
-exports.test = (configPath) => {
-  donkeyLog.info('about to go testing');
+exports.test = () => {
   const baseModulePath = path.join(__dirname, UP);
   const testCommandPath = path.join(baseModulePath, COMMAND_PATHS.TEST_RUNNER);
   const testConfigPath = path.join(baseModulePath, '.mocharc.js');
@@ -121,5 +131,23 @@ exports.test = (configPath) => {
       donkeyLog.error(error.message);
     }
     donkeyLog.info('finished running the test command');
+  });
+};
+
+exports.testWithCoverage = () => {
+  donkeyLog.info('requested running the test with coverage command');
+  const baseModulePath = path.join(__dirname, UP);
+  const coverageCommandPath = path.join(baseModulePath, COMMAND_PATHS.COVERAGE_RUNNER);
+  const testCommandPath = path.join(baseModulePath, COMMAND_PATHS.TEST_RUNNER);
+  const testConfigPath = path.join(baseModulePath, '.mocharc.js');
+
+  process.env.NODE_ENV = TEST;
+  process.env.NODE_PATH = `${process.env.NODE_PATH}:${path.join(baseModulePath, MODULES)}`;
+  process.env.DONKEY_PATH = baseModulePath;
+  runCommand(coverageCommandPath, [ testCommandPath, '--config', testConfigPath ], (error) => {
+    if (error) {
+      donkeyLog.error(error.message);
+    }
+    donkeyLog.info('finished running the test with coverage command');
   });
 };

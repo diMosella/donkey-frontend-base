@@ -6,6 +6,8 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const donkeyLog = require('./bin/donkey-log');
+
 const devOverrides = require('./webpack.dev.js');
 const prodOverrides = require('./webpack.prod.js');
 
@@ -103,8 +105,7 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath, projectModulesPa
       // TODO: add schema validation for configuration
       projectOverrides = require(path.join(projectPath || '', projectConfigPath));
     } catch (exception) {
-      console.warn(
-        `[ Donkey ]: couldn't load project config overrides`,
+      donkeyLog.warning(`couldn't load project config overrides`,
         `specified by ${projectConfigPath} on path ${projectPath}:`,
         exception
       );
