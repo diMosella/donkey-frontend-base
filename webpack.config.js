@@ -6,7 +6,7 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const donkeyLog = require('./bin/donkey-log');
+const donkeyLog = require('./src/utils/donkey-log');
 
 const devOverrides = require('./webpack.dev.js');
 const prodOverrides = require('./webpack.prod.js');
