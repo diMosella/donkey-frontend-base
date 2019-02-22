@@ -3,13 +3,12 @@ import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'r
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { createStore } from 'redux';
 import AddTodo from './AddTodo';
 import { VISIBILITY_FILTERS } from '../state/actions';
-import todoApp from '../state/reducers';
 const { expect } = global.chai;
 describe('(Component) AddTodo', () => {
-  it('renders an div-tag', () => {
+  let store;
+  before(() => {
     const mockStore = configureMockStore();
     const initialState = {
       todos: [],
@@ -22,7 +21,9 @@ describe('(Component) AddTodo', () => {
         authorizationPending: false
       }
     };
-    const store = mockStore(initialState);
+    store = mockStore(initialState);
+  });
+  it('renders an div-tag', () => {
     let todoText = '';
     const onTodoTextSubmit = (text) => { todoText = text; };
     const component = renderIntoDocument(
@@ -38,7 +39,6 @@ describe('(Component) AddTodo', () => {
   });
   it('only does add a Todo when text is provided', () => {
     let text = 'This test Link is added';
-    const store = createStore(todoApp);
     let todoText = '';
     const onTodoTextSubmit = (text) => { todoText = text; };
     const component = renderIntoDocument(
