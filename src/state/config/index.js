@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
-import { reducerRegistry, EVENTS } from './state/reducers';
+import { reducerRegistry, EVENTS } from '../reducers';
 
 export default function configureStore (initialState) {
   const store = process.env.NODE_ENV === 'development'
