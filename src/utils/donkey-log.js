@@ -1,10 +1,11 @@
 'use strict';
 
 // https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json
+// ✖️ ❌ ✗  ✖ ✕ ❓ ❔
 const SYMBOLS = {
-  INFO: '🌶',
-  WARNING: '❓',
-  ERROR: '✖️'
+  INFO: '🥕',
+  WARNING: '🚩',
+  ERROR: '✘ '
 };
 
 const DELIMITER = ', ';
