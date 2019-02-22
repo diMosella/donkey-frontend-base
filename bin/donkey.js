@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use-strict';
 
-const donkeyLog = require('./donkey-log');
+const donkeyLog = require('../src/utils/donkey-log');
 const carrotOnAStick = require('./carrotOnAStick.js');
 
 const ACTIONS = {

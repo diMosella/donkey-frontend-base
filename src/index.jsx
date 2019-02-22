@@ -1,17 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
-import appReducers from './state/reducers';
+import configureStore from './state/config';
 import App from './components/App';
 
-const store = process.env.NODE_ENV === 'development'
-  ? createStore(
-    appReducers,
-    // preloadedstate,
-    devToolsEnhancer()
-  )
-  : createStore(appReducers);
+const store = configureStore();
 
 document.addEventListener('DOMContentLoaded', event => {
   render(

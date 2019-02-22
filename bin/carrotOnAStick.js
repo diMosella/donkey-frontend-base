@@ -3,7 +3,7 @@
 const childProcess = require('child_process');
 const path = require('path');
 const fs = require('fs');
-const donkeyLog = require('./donkey-log');
+const donkeyLog = require('../src/utils/donkey-log');
 
 const SRC = 'src';
 const TEST = 'test';

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import donkeyLog from '../utils/donkey-log';
 
 class DonkeyErrorBoundary extends PureComponent {
   constructor (props) {
@@ -8,12 +9,12 @@ class DonkeyErrorBoundary extends PureComponent {
   }
 
   static getDerivedStateFromError (error) {
-    console.log('[ Donkey ]: will render fallback since an error has been thrown', JSON.stringify(error));
+    donkeyLog.info('will render fallback since an error has been thrown', JSON.stringify(error, null, 2));
     return { hasError: true };
   }
 
   componentDidCatch (error, info) {
-    console.warn('[ Donkey ]: an error has been thrown', JSON.stringify(error), JSON.stringify(info));
+    donkeyLog.warning('an error has been thrown', JSON.stringify(error, null, 2), JSON.stringify(info, null, 2));
   }
 
   render () {
