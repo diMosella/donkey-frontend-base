@@ -2,7 +2,7 @@
   "name": "donkey-frontend-base",
   "version": "0.1.1",
   "description": "A base module for frontend (web-)development",
-  "main": "bin/donkey.js",
+  "main": "index.js",
   "engines": {
     "node": ">=8"
   },

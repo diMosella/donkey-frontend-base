@@ -28,11 +28,18 @@ const broadcast = (register, reducers) => {
 };
 
 class ReducerRegistry {
-  constructor () {
-    if (!ReducerRegistry.instance) {
+  constructor (pointer) {
+    if (typeof pointer !== 'string' || pointer.length === 0) {
+      const message = `ReducerRegistry.constructor requires a non-empty pointer of type string`;
+      donkeyLog.error(message);
+      throw (new Error(message));
+    }
+    if (!ReducerRegistry.instance || ReducerRegistry.instance.pointer() !== pointer) {
+      this._pointer = pointer;
       this._broadcastRegister = [];
       this._broadcastUnregister = [];
       this._reducers = [];
+      this._nestedRegistries = [];
       this._toRemove = [];
       this._composedReducers = [combineReducers({})];
       ReducerRegistry.instance = this;
@@ -41,17 +48,25 @@ class ReducerRegistry {
   }
 
   /**
-   * Register a new reducer with a name, triggers REGISTER and CHANGE event
-   * @param {string} name The name under which the reducer is registered
+   * Get the identifying pointer of this ReducerRegistry instance
+   * @returns {string} The JSON-pointer for this ReducerRegistry instance
+   */
+  pointer () {
+    return this._pointer;
+  }
+
+  /**
+   * Register a new reducer with a pointer, triggers REGISTER and CHANGE event
+   * @param {string} pointer The pointer under which the reducer is registered
    * @param {function} reducer The reducer to register
    */
-  register (name, reducer) {
-    if (typeof name !== 'string' || name.length === 0) {
-      donkeyLog.error(`ReducerRegistry.register requires a non-empty name of type string`);
+  register (pointer, reducer) {
+    if (typeof pointer !== 'string' || pointer.length === 0) {
+      donkeyLog.error(`ReducerRegistry.register requires a non-empty pointer of type string`);
       return;
     }
-    if (this._reducers.find((reducer) => reducer.name === name)) {
-      donkeyLog.warning(`ReducerRegistry.register already includes a reducer with name ${name}`);
+    if (this._reducers.find((reducer) => reducer.pointer === pointer)) {
+      donkeyLog.warning(`ReducerRegistry.register already includes a reducer with pointer ${pointer}`);
       return;
     }
     if (typeof reducer !== 'function') {
@@ -63,7 +78,7 @@ class ReducerRegistry {
     prevReducers.forEach((prevReducer) => {
       this._reducers.push(produce(prevReducer, draftReducers => {}));
     });
-    this._reducers.push(produce({ name, reducer }, draftReducers => {}));
+    this._reducers.push(produce({ pointer, reducer }, draftReducers => {}));
 
     this._composedReducers.length = 0;
     this._composedReducers.push(produce(combineReducers(this.read()), draftComposition => {}));
@@ -73,22 +88,22 @@ class ReducerRegistry {
   }
 
   /**
-   * Unregister a reducer by name, , triggers UNREGISTER and CHANGE event
-   * @param {string} name The name under which the reducer was registered
+   * Unregister a reducer by pointer, triggers UNREGISTER and CHANGE event
+   * @param {string} pointer The pointer under which the reducer was registered
    */
-  unregister (name) {
-    if (typeof name !== 'string' || name.length === 0) {
-      donkeyLog.error(`ReducerRegistry.unregister requires a non-empty name of type string`);
+  unregister (pointer) {
+    if (typeof pointer !== 'string' || pointer.length === 0) {
+      donkeyLog.error(`ReducerRegistry.unregister requires a non-empty pointer of type string`);
       return;
     }
     const prevReducers = [...this._reducers];
     this._reducers.length = 0;
     prevReducers.forEach((prevReducer) => {
-      if (prevReducer.name !== name) {
+      if (prevReducer.pointer !== pointer) {
         this._reducers.push(produce(prevReducer, draftReducers => {}));
       }
     });
-    this._toRemove.push(produce(name, draftName => {}));
+    this._toRemove.push(produce(pointer, draftPointer => {}));
 
     this._composedReducers.length = 0;
     this._composedReducers.push(produce(combineReducers(this.read()), draftComposition => {}));
@@ -99,18 +114,18 @@ class ReducerRegistry {
 
   /**
    * Reads the registered reducers
-   * @param {string} [name] (Optional) The name the retrieve the reducer by
-   * @returns {object|function} When used with name, the specific reducer, otherwise an object with named reducers
+   * @param {string} [pointer] (Optional) The pointer the retrieve the reducer by
+   * @returns {object|function} When used with pointer, the specific reducer, otherwise an object with named reducers
    */
-  read (name = null) {
-    if (name === null) {
-      return this._reducers.reduce((accummulator, item) => ({ ...accummulator, [item.name]: item.reducer }), {});
+  read (pointer = null) {
+    if (pointer === null) {
+      return this._reducers.reduce((accummulator, item) => ({ ...accummulator, [item.pointer]: item.reducer }), {});
     }
-    if (typeof name !== 'string') {
-      donkeyLog.error(`ReducerRegistry.read requires a name of type string`);
+    if (typeof pointer !== 'string') {
+      donkeyLog.error(`ReducerRegistry.read requires a pointer of type string`);
       return;
     }
-    const result = this._reducers.find((item) => item.name === name);
+    const result = this._reducers.find((item) => item.pointer === pointer);
     return result ? result.reducer : null;
   }
 
@@ -167,7 +182,7 @@ class ReducerRegistry {
   }
 }
 
-const reducerRegistry = new ReducerRegistry();
+const reducerRegistry = new ReducerRegistry('/');
 Object.freeze(reducerRegistry);
 
 export default reducerRegistry;
