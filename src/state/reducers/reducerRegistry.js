@@ -8,6 +8,8 @@ export const EVENTS = {
   UNREGISTER: 'unregister'
 };
 
+const ROOT_PATH = '/';
+
 /**
  * 'Broadcasts' an event by calling all registered listeners
  * @param {Array} register The (event specific) listeners
@@ -27,6 +29,62 @@ const broadcast = (register, reducers) => {
   }
 };
 
+/**
+ * Converts a pointer string to a path array
+ * @param {string} pointer The pointer to convert
+ * @returns {Array} The path array
+ */
+const pointerToPath = (pointer) => {
+  if (typeof pointer !== 'string') {
+    donkeyLog.error(`ReducerRegistry converting pointer to array failed`);
+    return;
+  }
+  return pointer.split('/').filter((part) => part.length > 0);
+};
+
+/**
+ * Inspects a pointer, including the nesting inside a registry
+ * @param {string} pointer The pointer to inspect
+ * @param {string} registryPointer The pointer of the registry to compare with
+ * @param {string} [caller] The caller method to be used in error logging
+ * @returns {object} The result as object, with {boolean} field completed to indicate if
+ *  the inspection ran to completion, and {string} nestedPointer with value of the directly
+ *  nested pointer inside the registry.
+ */
+const inspectPointer = (pointer, registryPointer, caller = null) => {
+  const result = {
+    completed: false,
+    nestedPointer: null
+  };
+  const callerMethod = `ReducerRegistry${typeof caller === 'string' ? `.${caller}` : ''}`;
+  if (typeof pointer !== 'string' || pointer.length === 0) {
+    donkeyLog.error(`${callerMethod} requires a non-empty pointer of type string`);
+    return result;
+  }
+  if (!pointer.startsWith(ROOT_PATH)) {
+    donkeyLog.error(`${callerMethod} requires a pointer containing '/' and `,
+      `the provided '${pointer}' doesn't`);
+    return result;
+  }
+  const pointerPath = pointerToPath(pointer);
+  console.log('inspectPointer::', pointer, pointerPath.length, pointerPath);
+  const registryPointerPath = pointerToPath(registryPointer);
+  if (pointer !== ROOT_PATH && registryPointerPath.some((part, index) => pointerPath[index] !== part)) {
+    donkeyLog.error(`${callerMethod} requires the pointer to be nested in the registry`,
+      `but '${pointer}' is not in '${registryPointer}'`);
+  }
+  const relativePointerPath = pointerPath.slice(registryPointerPath.length);
+  if (relativePointerPath.length > 1) {
+    result.nestedPointer = `${this._pointer !== ROOT_PATH ? this.pointer : ''}/${relativePointerPath[0]}`;
+  }
+  result.completed = true;
+  return result;
+};
+
+/**
+ * A Registry of Reducers
+ * Private field values are mainly arrays, since mutating nested fields is not permitted for frozen objects
+ */
 class ReducerRegistry {
   constructor (pointer) {
     if (typeof pointer !== 'string' || pointer.length === 0) {
@@ -34,17 +92,14 @@ class ReducerRegistry {
       donkeyLog.error(message);
       throw (new Error(message));
     }
-    if (!ReducerRegistry.instance || ReducerRegistry.instance.pointer() !== pointer) {
-      this._pointer = pointer;
-      this._broadcastRegister = [];
-      this._broadcastUnregister = [];
-      this._reducers = [];
-      this._nestedRegistries = [];
-      this._toRemove = [];
-      this._composedReducers = [combineReducers({})];
-      ReducerRegistry.instance = this;
-    }
-    return ReducerRegistry.instance;
+    console.log('Constructor::pointer', pointer);
+    this._pointer = pointer;
+    this._broadcastRegister = [];
+    this._broadcastUnregister = [];
+    this._reducers = [];
+    this._nestedRegistries = [];
+    this._toRemove = [];
+    this._composedReducers = [combineReducers({})];
   }
 
   /**
@@ -61,16 +116,32 @@ class ReducerRegistry {
    * @param {function} reducer The reducer to register
    */
   register (pointer, reducer) {
-    if (typeof pointer !== 'string' || pointer.length === 0) {
-      donkeyLog.error(`ReducerRegistry.register requires a non-empty pointer of type string`);
+    const { completed, nestedPointer } = inspectPointer(this._pointer, pointer, 'register');
+    if (completed !== true) {
       return;
     }
-    if (this._reducers.find((reducer) => reducer.pointer === pointer)) {
-      donkeyLog.warning(`ReducerRegistry.register already includes a reducer with pointer ${pointer}`);
+    if (typeof nestedPointer === 'string') {
+      const existingNestedRegistries = this._nestedRegistries.filter((registry) => registry.pointer === nestedPointer);
+      const existingNestedRegistry = existingNestedRegistries.length === 1
+        ? existingNestedRegistries[0]
+        : null;
+      if (existingNestedRegistry) {
+        existingNestedRegistry.register(pointer, reducer);
+      } else {
+        const nestedRegistry = new ReducerRegistry(nestedPointer);
+        Object.freeze(nestedRegistry);
+        nestedRegistry.register(pointer, reducer);
+        this._nestedRegistries.push(produce(nestedRegistry, draftRegistry => {}));
+      }
+      return;
+    }
+
+    if (this._reducers.some((reducer) => reducer.pointer === pointer)) {
+      donkeyLog.warning(`ReducerRegistry.register: register already includes a reducer with pointer '${pointer}'`);
       return;
     }
     if (typeof reducer !== 'function') {
-      donkeyLog.error(`ReducerRegistry.register requires a reducer of type function`);
+      donkeyLog.error(`ReducerRegistry.register: register requires a reducer of type function`);
       return;
     }
     const prevReducers = [...this._reducers];
@@ -93,9 +164,16 @@ class ReducerRegistry {
    */
   unregister (pointer) {
     if (typeof pointer !== 'string' || pointer.length === 0) {
-      donkeyLog.error(`ReducerRegistry.unregister requires a non-empty pointer of type string`);
+      donkeyLog.error(`ReducerRegistry.unregister: register requires a non-empty pointer of type string`);
       return;
     }
+    // TODO: handle nesting
+
+    if (this._reducers.every((reducer) => reducer.pointer !== pointer)) {
+      donkeyLog.warning(`ReducerRegistry.unregister: register does not include a reducer with pointer '${pointer}'`);
+      return;
+    }
+
     const prevReducers = [...this._reducers];
     this._reducers.length = 0;
     prevReducers.forEach((prevReducer) => {
@@ -119,12 +197,15 @@ class ReducerRegistry {
    */
   read (pointer = null) {
     if (pointer === null) {
-      return this._reducers.reduce((accummulator, item) => ({ ...accummulator, [item.pointer]: item.reducer }), {});
+      const nested = this._nestedRegistries.map((registry) => registry.read())
+        .reduce((accummulator, registryItems) => ({ ...accummulator, ...registryItems }), {});
+      return this._reducers.reduce((accummulator, item) => ({ ...accummulator, [item.pointer]: item.reducer }), nested);
     }
     if (typeof pointer !== 'string') {
       donkeyLog.error(`ReducerRegistry.read requires a pointer of type string`);
       return;
     }
+    // TODO: handle nesting
     const result = this._reducers.find((item) => item.pointer === pointer);
     return result ? result.reducer : null;
   }
@@ -139,8 +220,8 @@ class ReducerRegistry {
     // cleanup state for removed reducers
     if (this._toRemove.length > 0) {
       state = produce(state, draftState => {
-        this._toRemove.forEach((name) => {
-          delete draftState[name];
+        this._toRemove.forEach((pointer) => {
+          delete draftState[pointer];
         });
       });
       this._toRemove.length = 0;
@@ -182,7 +263,17 @@ class ReducerRegistry {
   }
 }
 
-const reducerRegistry = new ReducerRegistry('/');
-Object.freeze(reducerRegistry);
+class ReducerRegistrySingleton extends ReducerRegistry {
+  constructor () {
+    if (!ReducerRegistrySingleton.instance) {
+      super(ROOT_PATH);
+      ReducerRegistrySingleton.instance = this;
+    }
+    return ReducerRegistrySingleton.instance;
+  }
+}
 
-export default reducerRegistry;
+const reducerRegistrySingleton = new ReducerRegistrySingleton();
+Object.freeze(reducerRegistrySingleton);
+
+export default reducerRegistrySingleton;
