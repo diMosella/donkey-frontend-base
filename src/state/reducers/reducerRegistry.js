@@ -1,3 +1,5 @@
+'use strict';
+
 import produce from 'immer';
 import { combineReducers } from 'redux';
 import donkeyLog from '../../utils/donkey-log';
@@ -9,6 +11,28 @@ export const EVENTS = {
 };
 
 const ROOT_PATH = '/';
+const PATH_SEPARATOR = '/';
+
+/**
+ * Performs a deep freeze on a object
+ * @param {object} object The object to deep freeze
+ * @returns {object} The frozen object
+ */
+const deepFreeze = (object) => {
+  // Retrieve the property names defined on object
+  var propNames = Object.getOwnPropertyNames(object);
+
+  // Freeze properties before freezing self
+  for (let name of propNames) {
+    let value = object[name];
+
+    object[name] = value && typeof value === 'object'
+      ? deepFreeze(value)
+      : value;
+  }
+
+  return Object.freeze(object);
+};
 
 /**
  * 'Broadcasts' an event by calling all registered listeners
@@ -39,19 +63,19 @@ const pointerToPath = (pointer) => {
     donkeyLog.error(`ReducerRegistry converting pointer to array failed`);
     return;
   }
-  return pointer.split('/').filter((part) => part.length > 0);
+  return pointer.split(PATH_SEPARATOR).filter((part) => part.length > 0);
 };
 
 /**
- * Inspects a pointer, including the nesting inside a registry
- * @param {string} pointer The pointer to inspect
+ * Validates a pointer, including the nesting inside a registry
+ * @param {string} pointer The pointer to validate
  * @param {string} registryPointer The pointer of the registry to compare with
  * @param {string} [caller] The caller method to be used in error logging
  * @returns {object} The result as object, with {boolean} field completed to indicate if
- *  the inspection ran to completion, and {string} nestedPointer with value of the directly
+ *  the validation ran to completion, and {string} nestedPointer with value of the directly
  *  nested pointer inside the registry.
  */
-const inspectPointer = (pointer, registryPointer, caller = null) => {
+const validatePointer = (pointer, registryPointer, caller = null) => {
   const result = {
     completed: false,
     nestedPointer: null
@@ -62,7 +86,7 @@ const inspectPointer = (pointer, registryPointer, caller = null) => {
     return result;
   }
   if (!pointer.startsWith(ROOT_PATH)) {
-    donkeyLog.error(`${callerMethod} requires a pointer containing '/' and `,
+    donkeyLog.error(`${callerMethod} requires a pointer containing ${ROOT_PATH} and `,
       `the provided '${pointer}' doesn't`);
     return result;
   }
@@ -116,7 +140,7 @@ class ReducerRegistry {
    * @param {function} reducer The reducer to register
    */
   register (pointer, reducer) {
-    const { completed, nestedPointer } = inspectPointer(this._pointer, pointer, 'register');
+    const { completed, nestedPointer } = validatePointer(this._pointer, pointer, 'register');
     if (completed !== true) {
       return;
     }
@@ -129,7 +153,7 @@ class ReducerRegistry {
         existingNestedRegistry.register(pointer, reducer);
       } else {
         const nestedRegistry = new ReducerRegistry(nestedPointer);
-        Object.freeze(nestedRegistry);
+        deepFreeze(nestedRegistry);
         nestedRegistry.register(pointer, reducer);
         this._nestedRegistries.push(produce(nestedRegistry, draftRegistry => {}));
       }
@@ -274,6 +298,6 @@ class ReducerRegistrySingleton extends ReducerRegistry {
 }
 
 const reducerRegistrySingleton = new ReducerRegistrySingleton();
-Object.freeze(reducerRegistrySingleton);
+deepFreeze(reducerRegistrySingleton);
 
 export default reducerRegistrySingleton;
