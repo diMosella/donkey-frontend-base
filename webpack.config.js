@@ -4,7 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const donkeyLog = require('./src/utils/donkey-log');
 
@@ -94,7 +94,9 @@ const baseConfig = {
     publicPath: PATH_PUBLIC
   },
   plugins: [
-    new CleanWebpackPlugin([PATH_BUILD]),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [PATH_BUILD]
+    }),
     new webpack.NamedModulesPlugin()
   ]
 };
@@ -120,7 +122,9 @@ const enhanceByProjectConfig = (projectPath, projectConfigPath, projectModulesPa
   if (typeof projectPath === 'string') {
     const projectBuildPath = path.join(projectPath, BUILD_FOLDER);
     baseConfig.output.path = projectBuildPath;
-    baseConfig.plugins[0] = new CleanWebpackPlugin([projectBuildPath], { root: projectPath });
+    baseConfig.plugins[0] = new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [projectBuildPath]
+    });
   }
   baseConfig.resolve.symlinks = false;
   if (typeof projectModulesPath === 'string') {
