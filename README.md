@@ -177,6 +177,7 @@ Code coverage is determined by `nyc`, the command-line interface for `istanbul`.
 #### React-localize-redux
 
 To simplify the localization, this package is used.
+TODO: replace by implementation in reducer registry.
 
 #### Immer
 
